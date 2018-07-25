@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: GUI Lesson 5 - Tiny Window with a JLabel</title>
+</head>
+
+<body>
+<div id="content">
+<div class="nav"><a href="../index.html">Contents</a> - Prev: <a href="gui-21-tinywin-2classes.html">GUI 3 - Tiny Window with subclass</a> - Next: <a href="gui-30-dogyears-gui.html">GUI 5 - Dog Years - GUI only</a></div>
+
+
+
+<h1>GUI 4 - Tiny Window with a JLabel</h1>
+
+
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Using a JPanel to hold components.</li>
+<li>Setting the layout of the content pane to FlowLayout.</li>
+<li>Creating a JLabel and adding it to the panel.</li>
+<li>Setting the window's content pane to the panel, and doing the layout.</li>
+</ul>
+<b>New Java classes, constructors, and methods</b>
+<ul>
+<li><code>JLabel</code>
+    <pre>
+    JLabel(<i>title</i>)         // Constructor</pre>
+    </li>
+<li><code>JPanel</code>
+    <pre>
+    JPanel()              // Constructor
+    setLayout(<i>layout</i>)     // Sets JPanel's layout
+    add(<i>component</i>)        // Adds component to panel.</pre>
+    </li>
+<li><code>JFrame</code>
+    <pre>
+    setContentPane(...)          // Sets JFrame's content pane.
+    pack()                       // Perform the layout.
+    setLocationRelativeTo(null)  // Center window on screen.</pre>
+    </li>
+<li><code>FlowLayout</code>
+    <pre>
+    FlowLayout()                 // Constructor</pre>
+    </li>
+</ul>
+</div>
+
+<p>The main program is like the previous example, after changing the GUI class name,
+so it isn't repeated here.
+</p>
+
+
+<h2>JFrame constructor and methods</h2>
+<table border="0" cellspacing="8">
+<tr valign="top"><td>
+
+<table border="1" cellspacing="0">
+<tr><th>JFrame</th></tr>
+<tr><td>
+<table>
+<tr><td></td><td>JFrame()</td></tr>
+<tr><td></td><td>setDefaultCloseOperation(...)</td></tr>
+<tr><td></td><td>setTitle(<i>title</i>)</td></tr>
+<tr><td></td><td>setVisible(true)</td></tr>
+<tr><td></td><td><b>setContentPane</b>(<i>layout</i>)</td></tr>
+<tr><td></td><td><b>pack</b>()</td></tr>
+<tr><td></td><td><b>setLocationRelativeTo</b>(null)</td></tr>
+</table>
+</td></tr></table>
+
+</td><td>
+The previous example called the <code>JFrame</code> constructor, activated the close box,
+set the title bar, and made the window visible.
+<p>
+This example shows how to center the window on the screen, 
+and work with the content pane.  We'll create a <code>JPanel</code> with the 
+components and then use <code>setContentPane</code> to make it the
+window's content pane.  After everything has been added to the 
+window, it's necessary to call <code>pack()</code> to perform the
+layout process.
+Then we can call <code>setLocationRelativeTo(null)</code> to center the window.
+</p>
+</td></tr></table>
+
+<h2>JPanel constructor and methods</h2>
+<table border="0" cellspacing="8">
+<tr valign="top"><td>
+
+<table border="1" cellspacing="0">
+<tr><th>JPanel</th></tr>
+<tr><td>
+<table>
+<tr><td></td><td><b>JPanel</b>()</td></tr>
+<tr><td></td><td><b>setLayout</b>(<i>layout</i>)</td></tr>
+<tr><td></td><td><b>add</b>(<i>component</i>)</td></tr>
+</table>
+</td></tr></table>
+
+</td><td>
+<code>JPanel</code> is used primarily for holding components, so there are
+few operations that it performs.  You need to call the constructor, tell what
+layout to use, and add the components.  
+</td></tr></table>
+
+
+
+<h2>JLabel constructor and methods</h2>
+<table border="0" cellspacing="8">
+<tr valign="top"><td>
+
+<table border="1" cellspacing="0">
+<tr><th>JLabel</th></tr>
+<tr><td>
+<table>
+<tr><td></td><td><b>JLabel</b>(<i>text</i>)</td></tr>
+<tr><td></td><td><b>JLabel</b>(<i>image</i>)</td></tr>
+<tr><td></td><td>JLabel(<i>text</i>,&nbsp;<i>image</i>)</td></tr>
+<tr><td></td><td>setFont(<i>font</i>)</td></tr>
+<tr><td></td><td>setText(<i>text</i>)</td></tr>
+</table>
+</td></tr></table>
+
+</td><td>
+<p>Usage: Because there is usually no need to refer to a label again,
+   it is common to pass it directly to the <code>add()</code> method
+   without saving it in a variable.  The constructor is the only thing
+   you really have to know about JLabel.
+   </p>
+    <pre class="fragment">
+content.add(new JLabel("Name"));</pre>
+<p>If you want change the font (or text), save the JLabel in a variable.
+</p>
+</td></tr></table>
+
+
+<h2>FlowLayout - Left to right, top to bottom</h2>
+<p>Making a good component layout can be a lot of work.
+Java uses <i>layout managers</i> to implement various layout strategies.
+The simplest is <code>FlowLayout</code>, which simply centers the components
+adding them from left to right, and if necessary flowing them to another line.
+This example only shows one component, but you'll see more in the next example.
+The only thing you do with a layout object is create it with <code>new</code>
+and use it to set the layout of a <code>JPanel</code>.
+</p>
+
+
+
+<h2>Source code - a subclass of JFrame</h2>
+<table><tr valign="top"><td>
+<p>Here's the source code, which goes through all the normal steps in building
+a GUI, even though we're adding only one component, a JLabel, to it.
+</p>
+</td><td>
+<p><img alt="" src="we-come-in-peace.jpg"/></p>
+</td></tr></table>
+
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+ 23 
+ 24 
+ 25 
+ 26 
+ 27 
+ 28 
+ 29 
+ 30 
+ 31 
+ 32 
+ 33 
+ 34 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File   : gui-tutorial/tw4/TinyWindow4.java
+// Purpose: Create a window with a JLabel.
+// Author : Fred Swartz - 2006-11-09
+
+import java.awt.*;           // Needed for FlowLayout.           //Note 1
+import javax.swing.*;
+
+////////////////////////////////////////////////////// class TinyWindow4
+class TinyWindow4 extends JFrame {
+
+    //============================================================= main
+    public static void main(String[] args) {
+        TinyWindow4 window = new TinyWindow4();
+        window.setVisible(true);
+    }
+
+    //======================================================= constructor
+    public TinyWindow4() {
+        //... Create content panel, set layout
+        JPanel content = new JPanel();                           //Note 2
+        content.setLayout(new FlowLayout());   // Use FlowLayout //Note 3
+
+        //... Add one label to the content pane.
+        JLabel greeting = new JLabel("We come in peace.");       //Note 4
+        content.add(greeting);                 // Add label      //Note 5
+
+        //... Set window (JFrame) characteristics
+        setContentPane(content);                                 //Note 6
+        pack();                                // Do layout.     //Note 7
+        setTitle("Tiny Window using JFrame Subclass");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);           // Center window.
+    }
+}
+</pre></div>
+</td></tr></table>
+
+<h3>Notes</h3>
+<ol>
+<li>Some elements of the GUI interface are defined in the older AWT package, although the components and containers (starting with "J") are all part of Swing.</li>
+<li>Create a new JPanel to hold the components for the window's content pane.</li>
+<li>A layout manager should be explicitly set for the content pane.</li>
+<li>Create a JLabel.</li>
+<li>Add the label to the content pane.  There really was no reason to assign the JLabel to a variable - the new JLabel(..) could have been an argument to add(...).</li>
+<li>The content pane of this JFrame is now set to the JPanel that we created earlier, named "content".</li>
+<li>After the content pane of the JFrame has been set and populated with components, it's necessary to call pack() to do the layout -- it sets the location and size of each component.</li>
+</ol>
+
+
+
+
+<h2>Creating a new content pane rather than using the defualt</h2>
+<p>Every window (<code>JFrame</code>) has a <i>content pane</i> that arranges 
+the components which have been added to it according to the specified layout.  
+The content pane is usually implemented as a <code>JPanel</code>.  
+</p>
+<p>
+Altho every JFrame comes with a predefined content pane, these examples
+create a new <code>JPanel</code> for the content pane.
+If you're interested in the issues and options for handling the content
+pane, look at 
+<i><a href="gui-commentary/guicom-60-contentpane.html">Content Pane (or Content Pain?)</a></i>,
+but it isn't necessary.
+</p>
+
+<div class="footer">
+Copyright 2006 <a href="http://www.fredosaurus.com/fred/index.html">Fred Swartz</a>
+Permission to copy for non-profit educational purposes.  All code is in public domain.
+</div>
+
+</div>
+
+</body>
+</html>
+

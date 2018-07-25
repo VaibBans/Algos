@@ -1,0 +1,70 @@
+When Sun published the recommendation to create and modify all Swing
+components in the EDT, I changed the way I write my GUI apps to mimic
+the example in the Java Tutorial.  The Tutorial example does the GUI
+creation in a static method called on the EDT from the main method.
+Before this recommendation we all just extended JFrame and created our
+GUIs in the constructor.  Using the static method required some changes
+to the coding of things like action listeners.  None of them
+insurmountable just different.  But why the static method?  Why couldn't
+we just extend JFrame as usual and instantiate it on the EDT?  I'm not
+sure why I didn't think of this before but somebody else's post on
+another subject got me to thinking.  So I'm curious how others create
+their Swing GUIs.  Do you follow the Tutorial, use the old method or
+something else?
+
+Thanks,
+
+knute...
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class test7 {
+     public static void createGUI() {
+         JFrame f = new JFrame("test7");
+         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         f.setSize(200,200);
+         f.setVisible(true);
+         System.out.println(EventQueue.isDispatchThread());
+     }
+
+     public static void main(String[] args) {
+         Runnable r = new Runnable() {
+             public void run() {
+                 createGUI();
+             }
+         };
+         EventQueue.invokeLater(r);
+     }
+
+}
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class test8 extends JFrame {
+     public test8() {
+         super("test8");
+         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         setSize(200,200);
+         setVisible(true);
+         System.out.println(EventQueue.isDispatchThread());
+     }
+
+     public static void main(String[] args) {
+         Runnable r = new Runnable() {
+             public void run() {
+                 new test8();
+             }
+         };
+         EventQueue.invokeLater(r);
+     }
+
+}
+
+-- 
+
+Knute Johnson
+email s/nospam/knute/ 

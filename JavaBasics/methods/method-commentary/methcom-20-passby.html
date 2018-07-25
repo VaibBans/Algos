@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Commentary: Pass by value / reference / name / ...</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Commentary: Pass by value / reference / name / ...</h1>
+
+<p><b>By value</b>.  There is some confusion about
+Java parameter passing.  Java uses <i>pass-by-value</i> and only pass-by-value.  
+Actual argument values are copied into the formal parameter variables.  
+There's no <i>pass-by-reference</i>.   
+The confusion comes from the fact that, for objects, a reference is
+passed, but the reference is <i>passed by value</i> (ie, the reference value is
+copied into the formal parameter variable).
+</p>
+
+
+<p>From the authors of Java: "There is exactly one parameter passing mode in Java 
+- pass by value - and that helps keep things simple."
+The Java Programming Language, 2nd ed. by Ken Arnold and James Gosling, section 2.6.1, page 40, 3rd paragraph.
+</p>
+
+<p><b>Java's simple parameter passing</b>.  Altho there are many possible
+parameter passing features (see C++ for some), the Java authors
+choose to only include one simple idea - pass-by-value, with 
+no default values or optional parameter (overloading often provides a satisfactory alternative), 
+no variable length parameter lists (added finally in Java 5), 
+no named parameters, 
+no pass-by-reference,
+no const (a general Java issue) parameters, 
+etc.  Of these, the lack of pass-by-reference is the most annoying, now
+that variable length parameters lists have been added.
+</p>
+
+<p>C++ programmers struggle with giving up pass-by-reference.
+I was upset that this powerful feature was missing, and
+was sure there must be some way to write <code>swap</code>, the standard
+test for pass-by-reference.</p>
+<pre class="fragment">
+   public void swap(Object a, Object b) {
+       ???? // Exchange a and b in calling program.
+   }</pre>
+   
+   
+<p>But it can't be done.  The fact that you may sometimes be able to change
+values in an object or data structure that is passed is not the same as being
+able to change the value of a variable (l-value) passed as an actual argument.</p>
+
+<p>I still miss pass-by-reference.
+There have been frequent proposals to allow multiple method return values, 
+which would solve most of these cases, but these proposals have been
+rejected by Sun, presumably because an efficient implementation would require
+a change to the JVM.
+</p>
+
+<p>Some retreaded-from-C++ authors have had a problem giving up pass-by-reference
+in their texts, and ever more astoundingly, some even believe it is in Java 
+(it took Deitel&amp;Deitel 3 or four editions to figure it out).
+</p>
+
+<h2>Alternatives</h2>
+<p><b>Ruby</b> is a relatively new programming language
+that has a lot of interesting features.  If you think C++ or Java
+are the end points of function evolution, you might be interested in Ruby features,
+especially what they call "blocks", which are like method objects (sometimes
+called <i>closures</i> or <i>continuations</i>).   It's not that the effect is
+impossible to achieve in Java, but that Ruby's simple syntax for it means
+that it makes the programs more, not less, readable to use them.
+</p>
+<p>Another feature is Ruby's multiple return values (tuples), which I've also used
+in an earlier (now extinct) language, Prograph.  Once you use multiple
+return values, is makes shoehorning everything into a single return value
+very annoying.
+</p>
+<p>
+I've been occasionally reading Thomas's <i>Programming Ruby</i>, and find it 
+very interesting, but I haven't really done anything with Ruby except for a
+few very simple test programs.  What stopped me was that there is no good
+documentation on writing GUI programs.  There are a couple of GUI libraries,
+but neither had sufficient documentation the last time I looked.
+</p>
+
+
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: Methods 4 - Local variables</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav --><div class="nav"><a href="../index.html">Contents</a> - Prev: <a href="methods-20-define.html">3 - Defining a static method</a> - Next: <a href="methods-35-3examples.html">5 - Example with three methods</a></div>
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Methods 4 - Local variables</h1>
+
+<!-- index "local variables" -->
+<!-- index "variables, local" -->
+<!-- index "parameters as local variables" -->
+<!-- index "final parameters" -->
+<!-- index "parameters, final" -->
+
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Local variables are declared within a method.</li>
+<li>Local variable lifetime is from method entry to method return.</li>
+<li>Local variable visibility is only within the method.</li>
+<li>Local variables have no initial value.</li>
+<li>Parameter variables are local variables initialized from the argument values.</li>
+</ul>
+<b>New Java language features</b>
+<ul>
+<li><code>final</code> modifier to prevent assignment to parameters.</li>
+</ul>
+<b>Principles / Style</b>
+<ul>
+<li>Don't assign to parameter variables.</li>
+</ul>
+</div>
+
+
+<h2>Local variables</h2>
+<p>Now that we've written two methods, <code>main</code> and <code>convertKmToMi</code>,
+you should know a little more about the variables in them.
+</p>
+<p>Variables that are declared in a method are called <i>local variables</i>.
+   They are called <i>local</i> because they can only be referenced and used
+   locally in the method in which they are declared.
+   In the method below <code>miles</code> is a local variable.
+   </p>
+<pre class="fragment">
+private static double convertKmToMi(double kilometers) {
+    double <span class="hiliteu">miles</span> = kilometers * MILES_PER_KILOMETER;
+    return miles;
+}</pre>
+   
+<h2>Visibility: Only in defining method</h2>
+   <p>No code outside a method can see the local variables inside another method.
+   There is no need, or even possibility, of declaring a local variable with a
+   visibility modifier -- local variables are automatically
+   known only in the method itself.
+   </p>
+   
+<h2>Lifetime: From method call to method return</h2>
+   <p>Local variables  are created on the call stack when the method is entered, 
+   and destroyed when the method is exited.  
+   You can't save values in local variables between calls.
+   For that you have to use instance variables, which you'll learn
+   about a little later.
+   </p>
+   
+   
+<h2>Initial value: None</h2>
+    <p>Local variables don't have initial values by default -- you can't try to use
+    their value until you assign a value.  It's therefore common to
+    assignment a value to them when they're declared.
+    </p>
+    <p><b>Compiler error</b>.  If you try to use a local variable
+    before it's been assigned a value, the compiler will
+    notice it and give an error message.  But the compiler doesn't really
+    know the exact order of execution in a program, so it makes some
+    conservative assumptions.  These assumptions can sometimes be too
+    conservative, and there are cases where you must initialize a local 
+    variable even though you know it will have a value before it's 
+    referenced.
+    </p>
+<pre class="fragment">
+// BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD
+private static double convertKmToMi(double kilometers) {
+    double miles;   
+    return miles;   // Won't compile because nothing was assigned to miles.
+}</pre>
+   
+<h2>Parameters are preinitialized local variables</h2>
+   <p>Method parameters are basically implemented as local variables.  
+   They have the same visibility (none outside the method) and
+   lifetime (created on method call, destroyed on method return).
+   </p>
+   <p><b>Preinitialized</b>.
+   The difference is that parameters are initialized from the corresponding argument values.
+   </p>
+<pre class="fragment">
+// Both <i>kilometers</i> and <i>miles</i> are implemented as local variables.
+private static double convertKmToMi(double <span class="hiliteu">kilometers</span>) {
+    double <span class="hiliteu">miles</span> = kilometers * MILES_PER_KILOMETER;
+    return miles;
+}</pre>
+
+<h2>Style: Don't assign to a parameter</h2>
+    <p>You can assign to a parameter variable, just as you would to
+    a local variable,  
+    but this is often considered bad style because it can deceive the 
+    casual reader in two ways:
+    </p>
+    <ul>
+    <li><b>Unexpected meaning change.</b>.  
+        Programmers assume parameter variables represent
+        actual argument values.  
+        Assigning to parameters breaks that assumption.
+        </li>
+    <li><b>Doesn't change actual argument</b>.
+        Because formal parameter variables are really local variables,
+        assigning new values to them doesn't have any effect on the 
+        actual parameters.
+        <p>However, in some programming languages
+        assignment to a parameter can assign to the corresponding
+        actual parameter (eg, C++ reference parameters).  
+        Therefore if you write an assignment to a formal parameter
+        variable, it may mislead the careless programmer with a C++ background.
+        Or the reader may pause and try to decide if you thought 
+        you were assigning to the actual argument.
+        In either case it reduces the readability.
+        </p>
+        </li>
+    </ul>
+
+<p><b>Example</b>.  The example below shows
+   how a parameter could be reused.  The overhead of declaring an
+   extra variable is just about zero, so this really isn't more
+   efficient, and even this small example is astoundingly 
+   misleading.
+   </p>
+<pre class="fragment">
+// BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD BAD
+private static double convertKmToMi(double kilometers) {
+    kilometers = MILES_PER_KILOMETER * kilometers;  // BAD - Don't do this, altho it works.
+    return kilometers;
+}</pre>
+    
+<h2>Style: <code>final</code> keyword prevents assignment</h2>
+<p>
+      Some programmers recommend using the <code>final</code>
+      keyword for each parameter.  This prevents assignment to 
+      the parameter.  Few programmers do this because
+      it adds extra clutter, which in a different way reduces
+      the readability.  
+      The use of self-restraint in 
+      assigning to parameters is usually suffcient, but specifying <code>final</code> isn't
+      a bad idea.
+      </p>
+<pre class="fragment">
+private static double convertKmToMi(<span class="hiliteu">final</span> double kilometers) {
+    double miles = kilometers * MILES_PER_KILOMETER;
+    return miles;
+}</pre>
+
+
+<h2>Review Questions</h2>
+<p>[TODO]</p>
+
+<div class="footer">2006</div>
+
+</div>
+</body>
+</html>
+

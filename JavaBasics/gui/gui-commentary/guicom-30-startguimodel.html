@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Start with the GUI or Model?</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Start with the GUI or Model?</h1>
+
+<p>Assuming the GUI and the model are separated, as they should be, where should
+the design start, and the effort of the first iterations be put?
+</p>
+
+<p><b>GUI</b>.  A good argument can be made for starting
+with the GUI: it's motivating, it's critical to get feedback from the customer,
+it helps understand what needs to be done, ...
+</p>
+
+<p><b>Model</b>.  The model or business logic is the most
+essential, and unvarying, part of the design.  It should be usable by a number
+of different interfaces.  This must be gotten right, and is therefore a good
+place to start.
+</p>
+
+<p><b>Both/Either</b>?  Of course, the experienced designer
+has no problem imagining the general outline of both the GUI and the Model,
+so can start with either, or both.  The real problem is where a <i>student</i>
+should start.
+</p>
+<p>I've encouraged students to start with the GUI, thinking that there are a lot
+of GUI issues they have to work out, and they can get something running early.
+I'm not entirely happy with the result -- students often spend a lot of time 
+working on the user interface, often to add minor or frivolous features.
+Perhaps one reason this is done is to avoid working on the model, which they don't understand
+as well.  I'm thinking of requiring a model design early -- perhaps both as
+a UML diagram and as code stubs with javadoc.
+</p>
+
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

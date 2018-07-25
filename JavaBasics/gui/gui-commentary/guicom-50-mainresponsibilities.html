@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Responsibilities of main and JFrame subclass constructor</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Responsibilities of <code>main</code> and <code>JFrame</code> subclass constructor</h1>
+
+    <p>Every class has certain <i>responsibilities</i>.  
+    Sometimes assigning these
+    responsibilities is easy, and sometimes boundary cases 
+    are unclear.  You'll see variation in 
+    the placement of JFrame initialization statements.
+    </p>
+    <p>Because you might want to have a splash screen, it seems
+    that determining when the window is made visible is the job of the
+    master coordinating method (main).  Similarly, exactly what
+    action is taken when the window is closed also belongs with the
+    controlling method.  You will sometimes see these actions
+    in the JFrame constructor, but my feeling is that it belongs
+    in the controlling framework (<code>main</code>).
+    </p>
+    <p>
+    Here is how the Tiny Window Subclass might be written with
+    all initialization in the JFrame subclass.  
+    These few statements are so easy to move that it doesn't seem
+    like much to worry about for simple programs.
+    </p>
+    <table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File   : gui-tutorial/tw2/TinyWinSubclass.java
+// Purpose: I don't like it, but here's an alternative
+//          placement of JFrame initialization statements.
+// Author : Fred Swartz
+// Date   : 2005-06-17
+
+import javax.swing.*;
+
+class TinyWinSubclass {
+    public static void main(String[] args) {
+        <span class="hilite">new TinyWinGUI();</span>                        //Note 1
+    }
+}
+
+
+class TinyWinGUI extends JFrame {
+    public TinyWinGUI() {
+        setTitle("Tiny Window using JFrame Subclass");
+        <span class="hilite">setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+        <span class="hilite">setVisible(true);</span>
+    }
+}
+</pre></div>
+</td></tr></table>
+
+<h3>Notes</h3>
+<ol>
+<li>Everything is done in the constructor.  NOT the style that will be used.  This is only to show a common alternative.</li>
+</ol>
+
+
+
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

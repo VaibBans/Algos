@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Commentary: Method terminology?</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Commentary: Method terminology?</h1>
+
+<h2>Method = Function = Procedure = Subroutine = Subprogram</h2>
+
+<p>The word <i>method</i> is commonly used in Object-Oriented Programming
+    and is used in Java.  Every programming language has this idea, but sometimes uses
+    other terms such as <i>function</i>, <i>procedure</i>, 
+    <i>subroutine</i>, ...  
+    Many programmers,including Java programmers, use these other terms, especially
+    <i>function</i>, but these notes will use <i>method</i>, the official Java term.
+    </p>
+    
+    
+<h2>Method categories</h2>
+<p>There have been proposals to establish a convention for identifying 
+   different <i>categories</i> of methods.  This could be used in documentation
+   for example.  There are two categories that are well established.
+   </p>
+   <ul>
+   <li><b>Getter</b> - methods return (ie, <i>get</i>) a 
+       value from an object.  The value often exists as a simple 
+       field in the class, but may also be synthesized when the <i>getter</i>
+       is called.
+       
+       <p><i>Synonym = Accessor.</i>  Those coming from a C++ background will
+          be more familiar with equivalent term <i>accessor</i>.
+          </p>
+          
+       <p><i>Naming conventions.</i>  The Java naming conventions for 
+          getter methods depends on whether the returned value is boolean
+          or not.
+          </p>
+          <ul>
+          <li><i>Boolean</i> getter names typically begin with the word
+              "is" or "has", as in 
+              <pre class="fragment">
+if (x.<span class="hlite">is</span>Visible()) . . .
+              
+while (y.<span class="hilite">has</span>Descendants()) . . .</pre>
+              </li>
+          <li><i>All other type</i> getters have names beginning with
+              the word "get", as in
+              <pre class="fragment">
+String greeting = z.<span class="hilite">get</span>Text()</pre>
+              </li>
+          </ul>
+       </li>
+   <li><b>Setter</b> methods set a value or <i>property</i> of an object, which
+       might be implemented as a field, but could be implemented in other ways.
+       
+       <p><i>Return value.</i>
+       Typically setters return no value, but two useful alternatives to void
+       are (1) return the old value, and (2) return this object so that
+       setter calls can be chained.
+       </p>
+       
+       <p><i>Synonym = Mutator.</i>  If you're a C++ programmer, you're
+          probably familiar with the term <i>mutator</i> for this type
+          of method, although in C++ <i>mutator</i> may apply to any function
+          that modifies any aspect of an object.
+          </p>
+          
+       <p><i>Naming convention.</i>  Setter methods should begin with "set",
+       for example,
+       </p>
+       <pre class="fragment">
+z.<span class="hilite">set</span>Text("Hello Earthling");</pre>
+       </li>
+       
+       
+   <li><b>Other</b> categories have been proposed, for example: factory methods,
+       conversion methods, enumerators, listeners, testing, etc.
+       </li>
+   </ul>
+   
+
+<h2>Argument or Parameter</h2>
+
+    
+
+
+    
+<!-- Would be nice to have method "categories" to document what types of
+     methods there are.  See http://forums.java.net/jive/thread.jspa?messageID=5250&tstart=0#5250 
+     satai
+
+Posts: 7
+	
+Method categories
+Posted: Nov 3, 2004 2:00 AM 	
+  	Click to reply to this topic 	Reply
+
+In the Smalltalk language there is a nice feature - Classes and methods can have 
+set a category. In Java classes are divided into packages, but there is lack of method categories.
+
+Category has only a documenting meaning, it has no importance for building and 
+running the application. You just say, that the method is, for example, initializing instances. 
+And an other method can be marked as "converting" and anybody now knows, 
+that the method is used to convert the object to any other type or via versa. 
+Probably the most usual and useful usage of such as marking is generating javadoc 
+- you can generate javadoc that would have methods divided into categories. 
+Such a documentation would be generally more useful.
+
+It would be useful, to have a set of common categories, that are well known by 
+all developers. Developers can, of course, use their project specific categories 
+(for example "CustomerSupport").
+
+Probably the most natural way to add categories is to add a @category("name") 
+anotation for method or add @category as a javadoc tag.
+
+
+	
+denismo
+
+Posts: 53
+From: St. Petersburg, Russia
+	
+Re: Method categories
+Posted: Nov 3, 2004 4:01 AM 	
+  	Click to reply to this topic 	Reply
+
+Yes, this is a good idea. There are many known categories - 
+factories, constructors, "descructors", converters, string representation, 
+comparision, property accessors, enumerators, container/child relationship, and so on.
+
+Some of this has actually been proposed officially: http://java.sun.com/j2se/javadoc/proposed-tags.html
+
+Votes are welcome.
+
+
+	
+satai
+
+Posts: 7
+	
+Re: Method categories
+Posted: Nov 3, 2004 4:19 AM 	
+  	Click to reply to this topic 	Reply
+
+Standard smalltalk ones are:
+accessing (geter and seters), instance (factory), initialize, copying, printing, 
+fileIn/Out, testing (isSomething etc), converting (asSomething etc.), 
+private (doesn't make any sense in java), examples
+
+I would enjoy some other such as unitTesting. 
+     
+     -->
+    
+
+<div class="footer">Copyleft 2006 <a href="http://www.fredosaurus.com/">Fred Swartz</a><a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></div>
+</div></body>
+</html>
+

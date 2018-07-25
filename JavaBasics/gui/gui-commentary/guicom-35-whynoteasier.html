@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Why aren't Java GUIs easier?</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Why aren't Java GUIs easier?</h1>
+
+<p>I don't want to exaggerate the 
+   difficulties of working with Java GUIs because they are much easier to build
+   than Microsoft Windows interfaces in C++.  But they are harder than
+   those in Visual Basic, for example.  
+   </p>
+
+<p><b>Flexibility</b> in the big Java problem for beginners (and advantage to advanced programmers) 
+      -- there are a huge number of
+      GUI classes, a huge number of methods that can be used in these classes,
+      and many ways to structure the framework.
+   </p>
+   
+
+<p><b>Too many classes</b>.   There are lots of GUI classes
+    However, many of these are useful only in special cases, or should never be used.
+    It's important to give perspective on what's important.
+    Some authors, eg, Deitel and Deitel, present everything they've learned,
+    regardless of how trivial it is.  In fact, they sometimes devote the most
+    text to things they find especially interesting, regardless of 
+    their utility.
+   </p>
+   <p>For the most part only the most essential classes will be explained.
+   </p>
+   
+
+<p><b>Too many methods</b>.  There are over 400 methods 
+       in the <code>JTextField</code> class (mostly inherited of course)!
+       The standard Java documentation doesn't tell you which of these
+       are useful.  In fact, you will write most programs using
+       only TWO JTextField methods.
+       </p>
+<p>These notes will try to concentrate on those methods needed to
+       know to write the vast majority of plain vanilla applications.
+   </p>
+   
+
+<p><b>Too many ways to put it all together</b>.  Even after you know which elements you
+       want to work with, and the few methods that are really useful,
+       you will find out that there are a number of ways to connect them.
+       Again the curse of flexibility gets in the way of providing a 
+       simple answer.  For each reasonable way to connect the parts,
+       there are many that don't scale as the problem becomes larger,
+       and will lead you down a path to eventual disaster.
+   </p>
+   
+<p>The approach here is concentrate on some very common, and good, ways of organize
+   the code -- subclass JFrame, use named inner class listeners, 
+   separate the GUI and model, ....  
+   There are good alternatives to what is presented here, 
+   and I'll try to mention them in these commentaries as time permits.
+   </p>
+   
+   
+<h2>Future directions - Sun's Application Framework?</h2>
+<p>The is no established best framework for building a GUI application.
+This has been a giant problem, but there is a chance it will be 
+solved, or at least partially, when Sun releases it's <i>Swing Application Framework</i>
+proposal.
+</p>
+<p>See Hans Muller's blog 
+<a href="http://weblogs.java.net/blog/hansmuller/archive/jsr296-presentation.pdf">Swing Application Framework JSR-296</a>
+presentation, which outlines preliminary thinking on the matter.
+</p>
+
+<p>Julian Doherty points has a nice overview of Swing problems in in his
+<a href="http://rawblock.blogspot.com/2007/03/jruby-can-save-swing-follow-up.html">JRuby can save Swing - Follow up></a> 
+blog entry.  Although it is nominally about JRuby and Groovy  and their relationship
+to Swing, it really is about the bigger problems.
+</p>
+
+
+<div class="footer">2007</div>
+
+</div>
+</body>
+</html>
+

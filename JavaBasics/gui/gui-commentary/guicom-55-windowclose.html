@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Window close operation</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Window close operation</h1>
+    <p>
+    <code>setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)</code>, a window listener, or nothing?
+    </p>
+    <p><b>Window listeners</b>.  When a window of a program is closed, you typically want to 
+    check to see if there is any unsaved data, and if so, ask the user
+    if they want to save it.  To do this you need to add a window listener.
+    </p>
+    
+    <p><b>setDefaultCloseOperation</b>.  Although adding a window listener is the right way to 
+    handle the close box click in a real program, simple programs often
+    don't have any state that needs to be saved, so I've used the common
+    shortcut of terminating the program when the window is closed.
+    The default action of closing a window just makes it invisible, 
+    but the program continues to run, 
+    making it hard to stop the program,
+    so it's essential to have either this or a listener.
+    </p>
+    <p>When the tutorial gets to the point where there is actually a state 
+    to be changed, window listeners will be introduced.
+    </p>
+
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: By hand vs GUI editors</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>By hand vs GUI editors</h1>
+<p><b>GUI editors</b>.  There are a number of <i>GUI editors</i> that allow you to build 
+a GUI using a drag-and-drop style.   
+These can be quite convenient, but they each have their own
+peculiarities, and require some amount of learning before you're
+proficient.  The end result of learning one well is that you can
+build attractive graphical user interfaces very quickly.
+</p>
+<p><b>Must learn basics first</b>.  
+Although you will be much more efficient in building a GUI with a GUI editor, 
+you still need to understand <i>how</i>
+things work.  Therefore it is imperative that you 
+learn how to build them by hand, which is pretty much the only
+way to really understand them.
+After you know what's going on,
+you might want to switch to a GUI editor - some programmers
+like to use them, some think they don't really help much,
+and some think they are a bad idea.
+</p>
+I like building them by hand, but perhaps I'm cheating because I use my own 
+layout manager, which makes things go very easily for me.
+My first reaction after using the NetBeans Matisse
+GUI editor, was that I really liked it and that it would make me a lot 
+more productive.  As I've used it for larger projects, I'm not longer
+convinced it's such a good idea.
+</p>
+
+
+
+
+<h2>Pro GUI editor</h2>
+<p>Here's what Josh Marinacci, one of the Sun Java GUI hotshots and coauthor
+of <i>Swing Hacks: Tips and Tools for Killer GUIs </i> says:
+</p>
+<blockquote><p>
+When it comes to graphical user interfaces (GUIs), don't use a layout manager! 
+Start by building all of your screens in Matisse, the new GUI builder in NetBeans IDE 5.0. 
+It will reduce your GUI-building time by a factor of five and lower your learning curve dramatically. 
+The days of hand-coding GUIs are over!
+</p>
+</blockquote>
+
+
+<h2>Con GUI editor</h2>
+<p>This is based on my use of the NetBeans Matisse GUI editor, which has a 
+reputation as one of the best.</p>
+<ul>
+<li>It worked well for small layouts, but for more sophisticated layouts I ran
+    into problems.  The problems because so severe that I had to throw that GUI
+    out and start again.  I'm not saying the problems were due to a bug in
+    Matisse, but that it required knowledge beyond my expertise to get it
+    to do what I wanted.
+    </li>
+<li><b>Learning curve.</b>  Although doing a simple layout is fairly easy,
+    it's not so easy to make a sophisticated layout work.  You still need
+    to become an expert.
+    </li>
+<li><b>Vendor lockin.</b>  The code produced by Matisse and it's use of 
+    GroupLayout is seriously unusable.   If for some reason you need to
+    stop using NetBeans, you're screwed.  You'll have to use something
+    else to do the layout.
+    </li>
+</ul>
+    
+    
+<h2>Solving the wrong problem</h2>
+<p>I've probably overstated the negative side a little too much, 
+but I think the main reason the GUI editors are getting so much
+positive press is that GUIs are too hard to code.
+The real solution is to make GUI coding easier!
+Swing's orientation is to make all things possible, but simple 
+things are not always simple.
+</p>
+
+    
+<h2>Other reading</h2>
+<ul>
+<li><a href="http://www.hacknot.info/hacknot/action/showEntry?eid=76">Beware The GUI Builder</a> by Hacknot</li>
+</ul>
+
+
+
+
+
+<div class="footer">2007</div>
+
+</div>
+</body>
+</html>
+

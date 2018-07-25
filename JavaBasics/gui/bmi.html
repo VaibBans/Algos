@@ -1,0 +1,440 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../../notes.css"/>
+
+  <title>Java: Example - Body Mass Index (BMI)</title>
+</head>
+<body><div id="content">
+
+<h1><a href="../../../index.html">Java</a>: Body Mass Index (BMI)</h1>
+
+<p><img src="bmi.gif" alt="BMI window"/></p>
+
+<p>The Body Mass Index program is divided into two files, the main
+program is in one file, and the GUI and logic are in another.
+They could also be in one file, but it is usually
+easier to work on them when they are in separate files.
+</p>
+
+<h2>The BMI main program</h2>
+
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+ 23 
+ 24 
+ 25 
+ 26 
+ 27 
+ 28 
+ 29 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File:   bmi/BMI.java
+// Description: Compute Body Mass Index = kg/(m*m)
+//         BMI is regarded as a measure of "fatness", with
+//         numbers less than 25 considered good.  Of course,
+//         this is really a rough approximation.
+//         Weight must be in kilograms and hight in meters.
+// Author: Fred Swartz
+// Date  : 2005-02-07
+// Other : Level     : Introductory.
+//         Structure : Two files, main in one,
+//                     GUI and logic as subclass of JPanel in another.
+//         Components: JButton, JTextArea
+//         Containers: JFrame, JPanel
+//         Layouts   : FlowLayout
+//         Listeners : ActionListener as inner class.
+
+import javax.swing.JFrame;
+
+//////////////////////////////////////////// class BMIclass BMI {
+class BMI {
+    //======================================== static method main
+    public static void main(String[] args) {
+        JFrame window = new JFrame("Body Mass Index");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setContentPane(new BMIPanel());
+        window.pack();
+        window.setVisible(true);
+    }
+}
+</pre></div>
+</td></tr></table>
+
+<h2>BMI GUI and logic</h2>
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+ 23 
+ 24 
+ 25 
+ 26 
+ 27 
+ 28 
+ 29 
+ 30 
+ 31 
+ 32 
+ 33 
+ 34 
+ 35 
+ 36 
+ 37 
+ 38 
+ 39 
+ 40 
+ 41 
+ 42 
+ 43 
+ 44 
+ 45 
+ 46 
+ 47 
+ 48 
+ 49 
+ 50 
+ 51 
+ 52 
+ 53 
+ 54 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File:   bmi/BMIPanel.java
+// Description: GUI and Logic for computing Body Mass Index
+// Author: Fred Swartz
+// Date:   2005-02-07
+// Problems: No error checking
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
+///////////////////////////////////////////////////////// class BMIPanel
+class BMIPanel extends JPanel {
+    //----------------------------------------------- instance variables
+    // Declare and initialize instance variables that are
+    // referred to when the program is running.
+    private JTextField m_mField   = new JTextField(4);  // height
+    private JTextField m_kgField  = new JTextField(4);  // weight
+    private JTextField m_bmiField = new JTextField(4);  // BMI
+
+    //====================================================== constructor
+    BMIPanel() {
+        //... Create button and add an action listener
+        JButton bmiButton = new JButton("Compute BMI");
+        bmiButton.addActionListener(new BMIListener());
+
+        //... Set layout and add components.
+        this.setLayout(new FlowLayout());
+        this.add(new JLabel("Weight in kilograms"));
+        this.add(m_kgField);
+        this.add(new JLabel("Height in meters"));
+        this.add(m_mField);
+        this.add(bmiButton);
+        this.add(new JLabel("Your BMI is"));
+        this.add(m_bmiField);
+    }
+
+    //////////////////////////////////////////////// inner class listener
+    // Inner class is used to easily access components.
+    // BMI is converted to int to eliminate excess "accuracy".
+    private class BMIListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            double kilograms = Double.parseDouble(m_kgField.getText());
+            double meters    = Double.parseDouble(m_mField.getText());
+            int    bmi       = (int)computeBMI(kilograms, meters);
+            m_bmiField.setText("" + bmi);
+        }
+    }
+
+    //=========================================== logic method computeBMI
+    public static double computeBMI(double weight, double height) {
+        return weight / (height*height);
+    }
+}//end class BMIPanel
+</pre></div>
+</td></tr></table>
+
+
+<h2>Notes</h2>
+
+<h3>Typical pattern for simple programs</h3>
+<p>The BMI program shows a typical pattern used to make a one-window program
+with components.  This is built from
+<a href="../../10basic_windows/30generic_calc.html">Example - Generic Calc</a>
+prototype by adding fields, renaming, and changing the calculation.
+</p>
+
+<h3>BMI class</h3>
+<p>A class with only a main program in it is a good way 
+to clearly separate creation of the window (a JFrame) from the 
+window contents (BMIPanel).
+</p>
+
+
+<h3>A subclass of JPanel</h3>
+<p><code>JPanel</code> is the Java class that implements a panel
+where we can put our components for display.
+The idea of a subclass (BMIPanel) is that it can do everything its parent
+class (JPanel) can do, and more.  The JPanel class knows
+only how to make a default background.  Our subclass inherits
+the background painting, and adds components to it.
+</p>
+
+<h3>Instance/field variables</h3>
+<p>Variables that are declared in the class, but not in
+a method or constructor are called
+<i>instance</i>, <i>field</i>,
+or <i>member</i> variables, depending on the author.
+The <i>lifetime</i> of these variables is the lifetime of the
+object, unlike local variables which disappear when the
+method or constructor returns. 
+It's necessary to use instance variables for anything you need to refer
+to by name during execution (ie, in the listeners).
+The convention of prefixing instance variables with an
+underscore ("m_") is used in this program.
+</p>
+
+<p>Declare instance variables for
+things that will be referred to when the program
+is running, ie after the constructor has built the 
+interface.  Typically these include:
+</p>
+<ul>
+<li><i>Components</i> such as text fields or text areas that contain information that you will
+    get or set.  Normally, you would not declare labels or buttons as instance variables; they can be local
+    variables or even just expressions in the constructor if your program never
+    refers to them <i>after</i> the interface has been constructed.  
+    
+    <p>Altho local variables
+    disappear when a constructor or method returns,
+    buttons and labels have been added to panel, which
+    saves their <i>values</i>.  
+    If you need to refer to a button to enable or disable it, 
+    it should also be an instance variable.
+    </p>
+    </li>
+<li><i>Variables</i> that hold values that are needed as part of the problem.
+    These are values that must remain between interactions with the user, not
+    just temporary calculations.
+    </li>
+</ul>
+
+
+<h3>The button listener</h3>
+<p>The button listener gets the strings the user typed in the
+text fields, converts them to numbers, computes a result, and displays
+the result, converted to string, in another text field.
+</p>
+
+<h3>Happy Trails programming</h3>
+<p>A problem with this code is that it doesn't 
+check for legal values.
+Checking isn't difficult, but it would
+make this simple example more complicated.  In
+industrial strength programs checking for valid
+input and error conditions can take a surprisingly
+large percent of the total code.
+Student examples often omit error checking, but
+see <a href="../../../data/strings/conversion/string2num.html">Strings to Numbers</a>
+for how to check for legal number conversions.
+</p>
+
+<h3>Separating Logic and Presentation</h3>
+<p>Ideally, the code that implements the core model of the 
+problem (the BMI computation in this case) should be split from
+the presentation of the interface.  
+If the logical model for the computation required saving values (its <i>state</i>),
+it would be better to put it
+in its own class, the computation of BMI can be done as a pure method 
+(<code>computeBMI()</code> - defined at the 
+bottom of the BMIPanel class.  A good rule of thumb is to
+structure the model code so that it could easily 
+be used by a command line mode interface or called by another program.
+If you always make some effort to separate logic and presentation, 
+you will be moving in the direction of the ideal MVC (Model, View, Controller)
+pattern.
+</p>
+
+
+<h2>OPTIONAL - Formatting the double value</h2>
+
+<p>If you want to display the BMI value as a floating point number,
+you will discover that the default conversion
+to string sometimes produces many digits after the decimal point. 
+The solution is to use a <i>java.util.DecimalFormat</i> object to format the output 
+to one (or however many you wish) decimal place.
+The DecimalFormat object has a <i>format()</i> method which takes a number and
+returns a String formatted as requested.
+See <a href="../../../data/strings/conversion/num2string.html">Number to String Conversion</a>.
+</p>
+
+
+<h3>Changes to <code>BMIPanel</code></h3>
+
+<pre class='example'>
+// Add this import to get the DecimalFormat class.
+<span class="hilite">import java.text.DecimalFormat;</span>
+    . . .
+    // Create this instance variable
+    <span class="hilite">DecimalFormat m_resultFormat = new DecimalFormat("0.0");</span>
+    . . .
+        // Assign result to a double without casting to int.
+        double bmi = computeBMI(kilograms, meters);
+        // Format the double with the resultFormat object.
+        m_bmiField.setText(<span class="hilite">m_resultFormat.format(bmi)</span>);
+. . .</pre>
+
+
+<h3>How should <code>resultFormat</code> be declared?</h3>
+
+<p>The declaration for <code>m_resultFormat</code> above was 
+as an instance variable, but there is nothing "variable" about
+it.  Because it never changes, it should be declared 
+as a <i>constant</i> using <code>final</code>.
+Because there only needs to be one copy, it should 
+be declared <code>static</code>, and because we want to be able
+to change this without affecting other programs, we should 
+make it <code>private</code>.  Ie,
+</p>
+<pre class="example">
+<span class="hilite">private static final </span>DecimalFormat RESULT_FORMAT = new DecimalFormat("0.0");
+</pre>
+
+<p>Of course, it's inconceivable that another program will use
+this class, so declaring it private is overkill, but it's 
+a good habit to establish.
+</p>
+
+
+
+<h2>OPTIONAL - Catching errors with try...catch</h2>
+
+<h3>Catching conversion errors</h3>
+<p>Most student programs don't check for most error conditions.
+Perhaps this is appropriate because there is only limited time
+in a course.  However, it isn't the way "real" programs should
+be written.  If a user types input that isn't a number
+into one of the BMI text fields, the program should produce 
+an error message, not crash.
+This suggested improvement is a good illustration of how
+exceptions are used for error checking.
+</p>
+
+<p>
+The <code>try...catch</code> statement (See <a href="../../../flow/exceptions/01exceptions.html">Exceptions</a>)
+in the button listener
+<i>catches</i> the <code>NumberFormatException</code> that 
+<code>Double.parseDouble()</code> <i>throws</i> if the input
+is not something that can be converted to double.
+</p>
+
+
+<h3>Changes to <code>BMIPanel</code></h3>
+
+<pre class='example'>
+. . .
+    private class BMIListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            //... Enclose code that might throw an exception in try clause.
+            <span class="hilite">try {</span>
+                double kilograms = Double.parseDouble(m_kgField.getText());
+                double meters    = Double.parseDouble(m_mField.getText());
+                int bmi = (int)computeBMI(kilograms, meters);
+                m_bmiField.setText("" + bmi);
+            <span class="hilite">} catch (NumberFormatException ex) {
+                m_bmiField.setText("Bad Input");
+            }</span>
+        }
+   }
+. . .</pre>
+<p>There are a number of ways so indicate an error to the user: Put
+an error message in an input or output field as above, beep, 
+show an error dialog, ...
+</p>
+
+
+
+<h2>Extensions to the BMI program</h2>
+<p>The following are possible extensions to the BMI program.
+</p>
+<ol>
+<li><b>Change to English units</b>.  Use English units (inches and pounds)
+     for input..
+    <p>Note: BMI must be calculated in metric units, so English
+    input values must be converted to metric units to solve the problem.
+    Assume there are 0.454 kilograms per pound and 0.0254 meters per inch.
+    </p>
+    </li>
+    
+<li><b>Give health advice</b>.
+     Based on the BMI values, make some commentary.
+     <p>Write another method which takes a BMI value and
+     returns a string comment on the number.  Call this method
+     after calling the <code>computeBMI</code> method.
+     Use a <code>JOptionPane</code> to deliver the message.
+     See <a href="../../../GUI/containers/20dialogs/10joptionpane.html">JOptionPane - Simple Dialogs</a>.
+     </p>
+     </li>
+     
+<li><b>Add error checking</b>. 
+    Use <code>if</code> statements to test for unreasonable and
+        illegal values.
+     </li>
+</ol>
+
+
+<div class="footer">
+Copyleft 2005 <a href="http://www.leepoint.net/fred/">Fred Swartz</a>
+<a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
+</div>
+</div></body>
+</html>
+

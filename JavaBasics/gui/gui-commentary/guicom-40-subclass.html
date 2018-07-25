@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Subclass JFrame, JPanel, or no subclass?</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Subclass <code>JFrame</code>, <code>JPanel</code>, or no subclass?</h1>
+
+<p><b>JFrame subclass</b>.  The most common way to define a window is to create a class
+    which extends JFrame, and build the GUI in the constructor of that class.
+    Most of these example programs use this style because it works reasonably well
+    and is the most popular.  Therefore it's important to become familiar with it 
+    to be able to read other programs comfortably.
+    </p>
+    
+<p><b>In main() with no subclass</b>.   Building a GUI entirely in a static 
+    main program is possible, but you have to be careful to avoid the
+    quicksand which surrounds this style.  It doesn't appear to scale up to 
+    larger programs as well as the JFrame subclass style.
+    <b>If you start to need static variables</b>, other than constants, you're
+    starting to sink, and it's time to make some different design decisions.
+    Take a look at <a href="guicom-dogyears-allinmain.html">Commentary - Build window in main()</a>
+    for an example of how to do this.
+    </p>  
+    
+    
+<p><b>JPanel subclass</b>.  Basing your GUI on a subclass of JPanel which is used for the 
+    content pane is one approach.  I've used this occasionally, but have gone back
+    to subclassing JFrame.  If you use it, you'll probably end up writing a method
+    in the JPanel subclass to build menus.  It's not bad, but is more awkward.
+    </p>
+    
+    
+<!--
+To stay in the mainstream of GUI building, don't go down the static path.  
+Use the common approach of subclassing JFrame, building the GUI in its constructor, 
+and define main in the same class.  Main should just create an object of that class, 
+then setVisible(true) on it.  
+Or do that after starting a separate thread if the GUI 
+is complicated enough to require that.
+
+There's no advantage to the static approach - basically the same amount of memory 
+has to be allocated anyway.  Java revolves around objects, 
+and the big disadvantage of the static approach is that not even one object is allocated for your class.  
+Perhaps the static approach works for everything, but you'll discover 
+that you have to do a number of things a little differently.
+
+You want a JFrame subclass to get one object, not multiple objects.
+  This will also keep you in the mainstream with more useful examples.
+-->
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

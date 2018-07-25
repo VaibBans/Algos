@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: main - Which class to put it in?</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1><code>main</code> - Which class to put it in?</h1>
+    <p><b>Many styles are used.</b>  The <code>main</code> method 
+    can be put in any class, and you will see many variations.
+    Programs that subclass JFrame, a very common style for building GUIs,
+    often just put it in the JFrame subclass.
+    This style is OK, and I often use it.  Defining it in a separate
+    class is sometimes clearer for beginning students because it doesn't 
+    require that seemingly mysterious instantiation of itself.
+    </p>
+    
+    
+<h2>Defining <code>main</code> in the JFrame subclass</h2>
+<p><b>Very common.</b>  This style is
+   used by many programmers and is a common style in these examples. 
+   I believe it is the single most common style for building a GUI, 
+   although this is based only on programs I happen to see, not on
+   a more reasonable survey.
+   </p>
+<p><b>Easier to manage.</b> 
+   Using this style eliminates one source file,
+   which makes reading the program generally simpler.
+   </p>
+   
+<p><b>I've switched</b> back and forth many times between putting main
+   in its own class versus putting it in a subclass.  
+   The differences are minor.
+   This is my current default style.
+   </p>
+   
+
+    
+<h2>Defining <code>main</code> in its own class</h2>
+
+<p><b>Easy to understand.</b>  Most beginners understand this style easily, and
+        feel more comfortable than when <code>main</code>
+        creates an object of its own class.  
+        Defining <code>main</code>
+        in a separate class is simple, and makes the code easier to
+        understand.
+        When main is in the same class as 
+        the GUI, there is a temptation to try to reference
+        instance variables from main, which is a common beginner error.
+        </p>
+        
+    <p><b>Applet and application.</b>
+       Separating <code>main</code> may make it easier to change between
+        an application and an applet without 
+        confusion.  It's also possible to put <code>main</code>
+        in a <code>JApplet</code> subclass, but again it may lead
+        to confusion with no special advantage.
+        </p>
+        
+    <p><b>Separates unchanging code.</b>  
+        Putting main in its own class moves unchanging window organization code
+        away from other code so there is less confusion.  
+        </p>
+        
+    <p><b>Better if additional setup.</b>  For simple programs a small main looks lonely 
+        in its own class, but as programs grow larger, <code>main</code>
+        may take on more model initialization and framework responsibilities.
+        Putting it in 
+        its own class gets you used to a style that
+        might be useful when your programs get larger.
+        </p>
+        
+    <p><b>JSR 296</b> is going recommend a standard way to build a GUI framework.
+       It hasn't been released as of this writing but whatever direction is
+       chosen may be the best style to use in the future.
+       Whether it is going to be appropriate for simple programs as well
+       as full-strength programs remains to be seen.
+       </p>
+
+
+
+<div class="footer">2007</div>
+
+</div>
+</body>
+</html>
+

@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: Methods 1 - Introduction to methods</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav --><div class="nav"><a href="../index.html">Contents</a> - Next: <a href="methods-15-arguments.html">Methods 2 - Actual arguments (parameters)</a></div>
+
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Methods 1 - Introduction to methods</h1>
+
+<!-- index "methods" -->
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Basic purpose of methods.</li>
+<li>Term: <i>call</i> = Execution proceeds to the code in a method.</li>
+<li>Term: <i>return</i> = Execution of a method finishes and then continues after point of call, possibly using a value form the method.</li>
+<li>Term: <i>static method</i> = Method requiring no extra object.</li>
+<li>Term: <i>instance method</i> = Method that operates on the object before the dot.</li>
+</ul>
+<b>New Java language features</b>
+<ul>
+<li>Static call syntax: <i>className</i> . <i>methodName</i> ( <i>arguments</i> )
+    </li>
+</ul>
+</div>
+
+<h2>Basic idea - A named group of statements - Verbs</h2>
+<p>By now you have used a lot of the predefined library methods, and written
+   many <i>main</i> methods.   This chapter explains methods in more detail.
+   </p>
+<p>
+   Java statements are grouped together in <i>methods</i>.
+   Each method must be inside a class.  Every method has a name, which starts with 
+   a lowercase character and typically is a <i>verb</i> because it does something.
+   </p>
+   
+<p><b>Other terms</b>: The idea of <i>method</i> is in
+every programming language, but different terms are used in many languages.
+You might have seen terms like
+<i>function</i>, <i>procedure</i>, or <i>subroutine</i>.  We'll use <i>method</i>
+consistently here, but you will hear programmers using these equivalent terms occasionally.
+</p>
+
+<h2>Business analogy - services provided by an organization</h2>
+<p>You could think of classes as corresponding to departments
+in an organization, and methods as being the services they provide.
+Let's take an example of calling the telephone information service to
+get someone's phone number. When you make the call,
+you pass information, the name of the person whose number you 
+want, to the method (information service).  
+This called "method" then does something, and returns 
+a value to you (the desired phone number).
+Just as you don't have to know how the information service performs its
+job, you typically don't need to know exactly how a method does its work,
+unless of course, you are writing it.
+</p>
+<p><b>Hierarchical organization</b>.  
+Computer programs are structured in many ways like an organization --
+higher levels rely on others to do much of the work.  
+They "call" on lower levels to do the work, passing them all necessary "arguments".
+In a similar way, the top level of a computer program, <code>main</code>, often consists largely of method calls,
+and those methods may in turn call on yet other methods.
+</p>
+   
+<h2>Terms: <i>call</i> and <i>return</i></h2>
+<p><b>Call</b>.  When a method call is encountered in a program, the program remembers where it was
+and execution goes to the method (<i>calls</i> the method). 
+After a small amount of initialization, the statements in the method are executed starting at the beginning.  
+</p>
+<p><b>Return</b>.  
+When the end of the method is reached or 
+a <code>return</code> statement is executed, the method <i>returns</i> to the where it was
+called from, and execution continues in the calling method from that point.
+A method may return a value (eg, <code>parseDouble</code>) or not (<code>showMessageDialog</code>).
+The call-return terminology is almost universal.
+</p>
+
+<h2>Static (class) methods</h2>
+
+<p><b>Static</b>.  This starts with <i>static</i> (also called <i>class</i>) methods
+   because all applications start with the <i>static</i> method <i>main</i>,
+   and many of the early library methods that you use are static methods.  
+   Static methods are different than <i>instance</i> methods
+   because they don't have an extra object passed to them.
+   </p>
+   
+<p><b>Instance</b> methods are associated with an object (an "instance" of a class).
+</p>
+   
+<h2>Identifying methods</h2>
+<p><b>Parentheses follow name</b>.  You can identify a method name because it is always followed by left and 
+right parentheses, which may enclose <i>arguments</i> (<i>parameters</i>).  
+If you see a left parenthesis with a name preceding it, it will be a method
+call or definition, or a <i>constructor</i> (constructors are very similar to methods).
+In the following example each method name is highlighted. 
+</p>
+
+<p>When calling methods outside of the current class, eg, in the Java library,
+static methods are preceded by the class name (followed by a dot), and instance
+methods are preceded by an object.  When a static method is defined, the 
+keyword "static" will preceded it.
+The example below has only static methods.
+</p>
+
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+ 23 
+ 24 
+ 25 
+ 26 
+ 27 
+ 28 
+ 29 
+ 30 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File   : methods/KmToMiles.java
+// Purpose: Convert kilometers to miles. Use JOptionPane for input / output.
+// Author : Fred Swartz
+// Date   : 22 Apr 2006
+
+import javax.swing.*;
+
+public class KmToMiles {
+    //============================================================ constants
+    private static final double MILES_PER_KILOMETER = 0.621;    
+
+    //================================================================= main
+    public static void <span class="hiliteu">main</span>(String[] args) {                        //Note 1
+        //... Local variables
+        String kmStr;    // String km before conversion to double.
+        double km;       // Number of kilometers.
+        double mi;       // Number of miles.
+
+        //... Input
+        kmStr = JOptionPane.<span class="hiliteu">showInputDialog</span>(null, "Enter kilometers.");
+        km = Double.<span class="hiliteu">parseDouble</span>(kmStr);
+
+        //... Computation
+        mi = km * MILES_PER_KILOMETER;
+
+        //... Output
+        JOptionPane.<span class="hiliteu">showMessageDialog</span>(null, km + " kilometers is "
+                                          + mi + " miles.");
+    }
+}
+</pre></div>
+</td></tr></table>
+
+<h3>Notes</h3>
+<ol>
+<li>This defines a method called "main".  Everything between the "{" on the end of this line to the matching "}" second from the end is the "body" of the method.</li>
+</ol>
+
+
+<p>The above code <i>defines</i> the static <code>main</code> method, which someone
+(eg, the operating system) will call with <code>KmToMiles.main(. . .)</code>.
+</p>
+<p>
+To do its work, <code>main</code> calls on other methods:
+<code>showInputDialog</code>, which is defined in the <code>JOptionPane</code> class, 
+<code>parseDouble</code>, which is defined in the <code>Double</code> class, and 
+<code>showMessageDialog</code>, which is also in the <code>JOptionPane</code> class.
+</p>
+<p>Whenever you call a static method in a different class, 
+precede it with the name of the class containing its definition, followed by a dot.
+If you don't specify the class name, it assumes the method is defined in the 
+current class.
+</p>
+
+<h2>Identifying instance methods</h2>
+<p><b>Object precedes</b>.  Instance method calls are identified in the following program.  Note that
+they are all preceded by an object reference.  This object is 
+used by the methods to do their work.  In this case, the objects are
+strings.
+</p>
+<p>In addition to supplying the object's data to the 
+method, the class of the object, eg String, is where the method is defined.
+</p>
+
+
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File   : dialog/capitalize/Capitalize2.java
+// Purpose: Capitalize first letter of each name.  Declare with first use.
+// Author : Fred Swartz - placed in public domain.
+// Date   : 30 Mar 2006
+
+import javax.swing.*;
+
+public class Capitalize2 {
+
+    public static void main(String[] args) {
+        //.. Input a word
+        String inputWord = JOptionPane.showInputDialog(null, "Enter a word");
+
+        //.. Process - Separate word into parts, change case, put together.
+        String firstLetter = inputWord.<span class="hiliteu">substring</span>(0,1);  // Get first letter
+        String remainder   = inputWord.<span class="hiliteu">substring</span>(1);    // Get remainder of word.
+        String capitalized = firstLetter.<span class="hiliteu">toUpperCase</span>() + remainder.<span class="hiliteu">toLowerCase</span>();
+
+        //.. Output the result.
+        JOptionPane.showMessageDialog(null, capitalized);
+    }
+}
+</pre></div>
+</td></tr></table>
+
+
+
+<h2>Review Questions</h2>
+<p>[TODO] - show sample code, ask to identify methods and the classes they are
+defined in.</p>
+
+<div class="footer">2006</div>
+
+</div>
+</body>
+</html>
+

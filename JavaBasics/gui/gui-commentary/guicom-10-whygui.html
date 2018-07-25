@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Why learn GUI programming?</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title"><a href="../../index.html">Java Basics</a></h1>
+
+<h1>Commentary: Why learn GUI programming?</h1>
+<p>All  "normal" programs are GUI based, 
+so this question seems peculiar.  It's raised because some Java textbooks are
+written without any GUI coverage, and others cover it only
+as a marginal or optional topic.
+I'll try to address why some authors avoid it, 
+and why GUIs should be taught from relatively early.
+</p>
+
+<p><b>Adaptations.</b>  The biggest problem is that many textbooks are
+simply adaptations of an author's earlier C++, C, or Pascal
+books.  These authors are no longer active programmers,
+so have never actually written GUI programs beyond
+simple textbook samples, and GUI programming requires a little
+experience before you feel comfortable.
+</p>
+<p><b>No motivation to change.</b>
+Publishers have no motivation to innovate,
+and don't want to make changes to the tried-and-true
+(tired-and-true) formulas of the past.
+Here are some of the objections I've heard
+from instructors who didn't want to teach GUIs.
+</p>
+
+
+<dl>
+<dt>Invalid objection: It's too hard</dt>
+    <dd>Based on my experience with students it
+    simply doesn't seem to be true that it's too hard.
+    I've taught it to very beginning Java students, and
+    they've managed fairly well with it.  
+    However, I believe that delaying it until they
+    know more about methods is probably better so
+    that there is less "magic"  involved.
+    Although there is a lot of infrastructure behind 
+    everything that is done in the GUI, 
+    giving the students good templates to follow
+    allows them to program without being bothered
+    by the many questions that might trouble a 
+    more experienced programmer.
+    
+    <p>Far from being seen as hard, students are very
+    eager to learn it because it allows them to build
+    real programs - programs that they can show their
+    family and friends.
+    </p>
+    </dd>
+
+<dt>Invalid objection: It isn't related to "normal" programming</dt>
+    <dd>
+    Every "normal" program has a user interface, so it certainly
+    is "normal".  It's hard to imagine a student level program that
+    shouldn't have a GUI interface.
+    
+    <p>When programs become larger, the percentage of 
+    the code that is related to the GUI becomes smaller
+    and the portion of code related to the logic
+    becomes larger.  In a large project, 
+    only a few programmers may work on the GUI, so there is
+    plenty of large-project programming that doesn't involve
+    writing GUIs.
+    </p>
+    <p>Also, a number of programs have no
+    GUI interface.  Java programs running on a server support 
+    web pages, but produce HTML to display to the user, and
+    don't involve writing a Java GUI.  There are other "faceless"
+    programs.  For example,
+    I once wrote a Java program that ran every day automatically,
+    read information from various pages on the Internet and 
+    sent me an analysis every day by email.  
+    No GUI interface was necessary.
+    </p>
+    </dd>
+
+<dt>Weak objection: Covering GUIs means leaving something else out</dt>
+    <dd>There are a fixed number hours in 
+    a programming course, and adding something means 
+    removing something else.
+    So what should be removed? 
+    There are a few obvious candidates.
+    <p><b>Eliminate/delay console I/O</b>. 
+    One of the first candidates for elimination is console I/O.
+    This is less of a problem since the introduction of the relatively simple
+    Java 5 <code>Scanner</code> class, but coverage of even this should
+    be delayed until file I/O is covered, which itself should
+    be delayed until the JFileChooser Dialog is covered.
+    </p>
+    <p><b>GUI as inheritance example</b>.  A major issue in teaching
+    Object-Oriented Programming is teaching <i>inheritance</i>.
+    There are nice intuitive analogies to inheritance 
+    with examples like the relationship between 
+    animal phyla, but these all suffer from the 
+    difficulty of turning these into code.  
+    The standard bank account or employee examples
+    are OK, but suffer from not furnishing any 
+    really convincing programming opportunities.
+    Teaching inheritance is hard
+    because there aren't simple problems that
+    can use it.
+    </p>
+    <p>
+    Altho inheritance is very important
+    to understand, it isn't used that often.
+    One of the few places where it is used to great advantage is in GUIs.
+    The GUI system can and should be used as a
+    real, not contrived, example of inheritance.
+    </p>
+    
+    <p><b>Interfaces</b>.  Far more important than 
+    inheritance are <i>interfaces</i>.  Again, it is hard
+    to create small, real, examples of interface usage
+    that can be related to real student programs at
+    a fairly early stage.  
+    GUI programming, primarily in the form of <code>ActionListener</code>,
+    is a good model for interfaces at an early stage.
+    </p>
+    
+    <p><b>And more</b>.  In addition to providing real
+    demonstrations of inheritance and interfaces, GUIs 
+    demonstrate other OOP concepts such as inner classes, method overriding, constructors,
+    and constructor chaining.  
+    later it can provide a good motivation for threads.
+    </p>
+    
+    <p><b>Mostly changing, not adding</b>.  
+    To a large extent teaching GUI programming doesn't have to 
+    mean leaving something out, but rather redirecting
+    coverage of OOP topics to practical GUI examples.
+    </p>
+    
+    </dd>
+
+</dl>
+
+<p>The conversion of textbooks to early GUI will probably 
+have to wait for a new generation of authors who grew up
+with GUIs.
+</p>
+
+
+
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

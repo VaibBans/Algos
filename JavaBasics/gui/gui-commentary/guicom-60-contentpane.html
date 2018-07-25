@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: ContentPane (or Content Pain?)</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>ContentPane (or Content Pain?)</h1>
+
+<p><b>JFrames</b> have a <i>content pane</i>, 
+which holds the components.  These components are sized and positioned by the
+layout manager when JFrame's <code>pack()</code> is called.  
+</p>
+<p><b>Content pane border.</b> There are several ways to handle the content pane,
+but most of them fail to provide one basic requirement -- ability to set
+a border.
+If you look at design guidelines
+(eg, Sun's <a href="http://java.sun.com/products/jlf/ed2/guidelines.html">Java Look and Feel Design Guidelines, Second Edition</a>) 
+and actual practice for attractive windows (both JFrames and JDialogs),
+you will generally observe the following:
+</p>
+<ul>
+<li><b>No, or thin, borders.</b>  
+    Windows with a large editing or display area often have no or very thin borders. 
+    Users want to have as big a working area as possible.
+    </li>
+<li><b>Borders</b> appear on most windows that are filled with controls.  
+    For example, the typical dialog box or secondary window has a relatively wide (eg, 12 pixel) border,
+    and similarly for primary windows that have a fixed size.
+    </li>
+</ul>
+<p>The problem is that the Container class doesn't have a way to set borders.</p>
+
+<h2>Inheritance hierarchy</h2>
+<p>To better understand the situation, it's good to have the inheritance
+of some of these containers in mind.</p>
+
+<table>
+<tr valign="top">
+<td><table border="1" cellspacing="0">
+    <tr><td><b>JPanel</b></td></tr>
+    </table>
+</td>
+<td>-&gt;</td>
+<td><table border="1" cellspacing="0">
+    <tr><td><b>JComponent</b></td></tr>
+    <tr><td>setBorder(...)</td></tr>
+    </table>
+</td>
+<td>-&gt;</td>
+<td><table border="1" cellspacing="0">
+    <tr><td><b>Container</b></td></tr>
+    <tr><td>add(...)
+        <br/>setLayout(...)</td></tr>
+    </table>
+</td>
+<td>-&gt;</td>
+<td><table border="1" cellspacing="0">
+    <tr><td><b>Component</b></td></tr>
+    </table>
+</td>
+<td>-&gt;</td>
+<td><table border="1" cellspacing="0">
+    <tr><td><b>Object</b></td></tr>
+    </table>
+</td>
+</tr></table>
+
+
+
+
+<h2>Different approaches to using the content pane</h2>
+<p>You will see all of these approaches used by different programmers.
+They are all reasonable.  Choose the one which
+makes you most comfortable.
+They all assume that the code occurs inside of a JFrame subclass
+constructor or method (ie, <code>this</code> refers to
+the <code>JFrame</code>).
+</p>
+<dl>
+   
+<dt>Create a JPanel.  Set the content pane - My favorite.</dt>
+   <dd>
+<pre class="fragmentBox">
+class GUI extends JFrame {
+    . . .
+    GUI() {
+        . . .
+        JPanel content = new JPanel();
+        content.setLayout(...);
+        content.setBorder(BorderFactory.createEmptyBorder(11,11,11,11));
+        content.add(...);
+        content.add(...);
+        . . .
+        setContentPane(content);</pre>
+   </dd>
+   
+<dt>Get content pane, work with it.  Problem: Unable to set border.</dt>
+    <dd>
+<pre class="fragmentBox">
+class GUI extends JFrame {
+    . . .
+    GUI() {
+        . . .
+        Container content = getContentPane();
+        <s>content.setBorder(BorderFactory.createEmptyBorder(11,11,11,11));</s>
+        content.setLayout(...);
+        content.add(...);
+        content.add(...);
+        . . .</pre>
+    </dd>
+   
+<dt>Use <code>getContentPane</code> for every reference. Problem: Unable to set border.</dt>
+   <dd>
+<pre class="fragmentBox">
+class GUI extends JFrame {
+    . . .
+    GUI() {
+        . . .
+        getContentPane().setLayout(...);
+        <s>getContentPane().setBorder(BorderFactory.createEmptyBorder(11,11,11,11));</s>
+        getContentPane().add(...);
+        getContentPane().add(...);
+        . . .</pre>
+   </dd>
+   
+<dt>Use Java 5 JFrame pass-through methods.  See <i>Blast from the past</i> discussion below.</dt>
+   <dd>
+<pre class="fragmentBox">
+class GUI extends JFrame {
+    . . .
+    GUI() {
+        . . .
+        setLayout(...);
+        <s>setBorder(BorderFactory.createEmptyBorder(11,11,11,11));</s>
+        add(...);
+        add(...);
+        . . .</pre>
+   </dd>
+   
+</dl>
+
+
+
+<h2>Why I prefer to create a new content pane</h2>
+<p>Every <code>JFrame</code> comes with a pre-created content pane.  What a waste.
+</p>
+
+<p><b>Reason: Restrictions on Container.</b>
+If you try to use the returned <code>Container</code> from <code>getContentPane()</code>,
+you can't use <code>setBorder(...)</code>.
+</p>
+<p><i>Irony.</i>
+<code>getContentPane()</code> returns a <code>Container</code> object.
+This isn't really a plain <code>Container</code> object, but is actually
+a <code>JPanel</code>!  This is a <code>Container</code> as a consequence of
+the hierarchy.
+So if we get the predefined content pane, it turns out it's actually a <code>JPanel</code>,
+but we really can't take advantage of the functionality that was added
+by <code>JComponent</code>.
+If we downcast it to <code>JPanel</code>, we create fragile code that might 
+break because the contract with <code>getContentPane()</code> is to return
+a <code>Container</code>, and there is no guarantee that future versions
+will actually continue to return a <code>JPanel</code>.
+</p>
+
+
+<p><b>Reason: Generality of one programming style.</b>  The overall layout of 
+a window is often created by nesting panels.  If you're going to be creating
+panels and working with them, it's easier to treat them all the same rather
+than making the top-level content pane a special case.
+</p>
+
+
+<p><b>Reason: What is the default layout?</b>  
+And just what is the default layout for
+a JFrame's content pane?  Is it the same as for an Applet or a
+newly created JPanel?  Surprisingly they aren't the same.  
+And the default was changed in different versions (admittedly you have to 
+go way back to find this change).
+So I recommend not relying on the default layout.  
+Always explicitly set for the content pane, even if you use the 
+predefined one.
+</p>
+<p>And just in case you thought the default layout was <code>BorderLayout</code>,
+as the documentation says, you might be surprised that it is really
+an anonymous inner subclass of <code>BorderLayout</code>.
+I haven't bothered to look at the source code to figure out why
+they just didn't use a normal <code>BorderLayout</code>, but it makes
+me nervous.  
+I hate these <i>FUD</i> (Fear, Uncertainty, Doubt) arguments,
+but it's what I feel when thinking about the default layouts.
+</p>
+<p>And the final layout issue is that you should be using a better layout
+   than <code>BorderLayout</code> anyway.
+   </p>
+
+   
+<p><b>Reason to use predefined content pane: efficiency?</b>
+Creating a <code>JPanel</code> can't be very expensive, but
+it does cost some execution time.  This small
+one-time cost is worth it.
+</p>
+
+
+
+<h2>Blast from the past - Adding directly to a JFrame in Java 5</h2>
+<p><b>Long ago</b>, before the Swing GUI library, there was no content
+pane and components were added directly to the window (the old AWT <code>Frame</code>
+class).
+</p>
+
+<p><b>Swing.</b>  When the superior Swing GUI library came along, it was easy, but annoying, 
+to rewrite code to use Swing's content pane.
+That was long ago, and for most of Java's history programmers have been using
+the content pane explicitly.  
+</p>
+
+<p><b>Java 5?</b>  For some reason, Java 5 added the ability to use the content pane
+by creating <code>add()</code> and <code>setLayout()</code> in <code>JFrame</code>
+which pass-through calls to the underlying content pane so it looks like the old AWT code.
+Maybe they did this because are request has been on the request queue for a really long time, and it was trivial to implement.
+Maybe it was just someone's pet project.
+</p>
+
+<p>
+They defined <code>add()</code> methods in <code>JFrame</code> which simply
+call the corresponding <code>add()</code> methods for the content pane.
+It seems strange to add this feature now, especially since many
+layouts use multiple nested panels so you still have to be comfortable with
+adding directly to a <code>JPanel</code>.
+And not everything you want to do with the content pane can be done through
+calls to the <code>JFrame</code>.
+</p>
+
+<p><b>Worse than useless.</b>  There are lots of ways to make Swing more usable; adding this "feature" seems 
+like a waste of manpower and adds yet more unneeded alternatives.
+They regularly reject useful additional
+features because they are concerned about the growing size of the Java API.
+So...
+</p>
+
+<p><b>Raising cognitive complexity</b> with useless options increases every programmer's 
+burden a little bit because they always have to be prepared to deal with
+this alternative when reading code.
+</p>
+<p><b>It's your time, waste it if you want to.</b>  There is no problem if you want to use this feature, 
+but why get in the habit of using this minimally useful alternative when you have to know 
+how to explicitly deal with a <code>JPanel</code> for many layouts anyway?</p>
+
+
+<h2>Suggested practice: Name the content pane "content"</h2>
+<p>I suggest giving the content pane <code>JPanel</code> 
+a name that lets the reader know it is the content pane.  
+The name <code>content</code>, which is probably used by more programmers than
+any other name.
+</p>
+
+
+
+<div class="footer">2007</div>
+
+</div>
+</body>
+</html>
+

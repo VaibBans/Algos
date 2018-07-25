@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: GUI: Lesson 8 - Overall Organization</title>
+</head>
+<body>
+<div id="content">
+<div class="nav"><a href="../index.html">Contents</a> - Prev: <a href="gui-31-dogyears-guimodel.html">GUI 6 - DogYears - Listeners</a></div>
+
+<h1>GUI 7 - Overall organization</h1>
+
+<div class="purpose">
+<p><b>Purpose of this lesson</b>: Big picture outline of GUI parts.</p>
+</div>
+
+
+<p><img src="GUI-big-pic.gif" alt=""/></p>
+
+   
+   
+<p><b>Top-level Containers</b> are windows (JFrame, JDialog).
+Each window has two intermediate containers that are commonly used - a <i>menu bar</i> which contains
+the menus, and the <i>content pane</i> which holds the components.
+If there is no menu bar, the content pane expands to fill that area.
+</p> 
+
+   
+<p><b>Intermediate Containers</b> (eg, JPanel) contain components.
+Every container must have a <i>layout manager</i>.
+</p>    
+
+<p><b>Layouts</b> (sometimes called layout managers) specify how to arrange 
+and size components in a JPanel (or other intermediate container).
+Every JPanel starts with a default layout manager, but it's better
+to set it explicitly.
+Common layout managers include FlowLayout, 
+BorderLayout, GridLayout, GridBagLayout, etc.
+</p>
+   
+<p><b>Components</b> are user interface controls like buttons (JButton, ...),
+text boxes (JTextField, JTextArea, ...), labels (JLabel), etc.
+These are added to a container with the <tt>add()</tt>
+method.
+</p>
+
+
+<p><b>Listeners</b> are attached to components and their methods are called when
+the component is used (eg, a button is clicked).
+The listeners interact with the <i>model</i>, the basic logic of the program.
+</p>
+    
+<p><b>Other</b>. 
+These are essential elements for user
+interfaces, but others will be useful in some programs, eg, graphics, 
+animation, mouse, keyboard, sound, threads, look anb feel, ...
+</p>
+
+
+<!--
+<h2>References</h2>
+<ul>
+
+<li>Guidance on appearance can be found in Sun's 
+    <i>Java Look and Feel Design Guidelines</i>, which is available on-line
+    for free (<a href="http://java.sun.com/products/jlf/ed2/book/">java.sun.com/products/jlf/ed2/book/</a>).
+    </li>
+</ul>
+  -->
+
+
+
+<div class="footer">
+Copyright 2005 <a href="http://www.fredosaurus.com/fred/index.html">Fred Swartz</a>
+Permission to copy for non-profit educational purposes.  All code is in public domain.
+</div>
+</div>
+
+</body>
+</html>
+

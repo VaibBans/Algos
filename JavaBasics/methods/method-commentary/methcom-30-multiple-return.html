@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Commentary: Return statements and the single exit fantasy</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Commentary: Return statements and the single exit fantasy</h1>
+<p><b>Structured programming purists</b>.  
+A controversial "rule" used by strict structured programmers is 
+that <i>every method should have only one return statement at the end</i>.
+Their reasoning is that it is easier to understand control flow
+when you know exactly where the method returns (the end).  
+</p>
+
+<p>The single return issue is often called the <i>single exit</i> issue, and it
+also applies to use of the <code>continue</code>
+and <i>break</i> statements in loops, which are forbidden by the purists, 
+but allowed by the simplifiers.
+</p>
+
+<p><b>Simplifiers</b>.  Altho a single exit is appealing, code can become quite
+convoluted with setting and testing additional extra boolean variables which are needed
+to implement a single exit style.
+Most programmers probably support the idea that <i>simple readable code in more important
+than following any arbitrary rule</i>.  
+If coding to achieve a single return means complicating the code, then it's a mistake. 
+</p>
+
+
+<h3>Exercise: Change this to single-return style</h3>
+
+<p>It's fairly easy to rewrite this to use only a single return; try it.
+And don't use a <i>break</i> statement in the loop because this also
+violates the single-exit style.
+</p>
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+    //======================================================= primeFactor
+    // Return a factor of n, or 0 if n is prime.
+    //     Uses simple algorithm of dividing by all numbers up to n.
+    //     Could improve efficiency many ways.
+    public static int primeFactor(int n) {
+        for (int divisor = 2; divisor &lt; n; divisor++) {
+            if ((n % divisor) == 0) {
+                <span class="hilite">return</span> divisor;  // Divisible implies not prime!
+            }
+        }
+        <span class="hilite">return</span> 0;  // Must be prime if nothing was able to divide it.
+    }
+</pre></div>
+</td></tr></table>
+
+
+
+<h2>Variations on <code>max()</code> showing several possible return strategies</h2>
+
+<p><span class="leadin">Problem</span>: Write a method to compute the maximum of two
+double values.  These alternate implementations show that even this
+simple problem offers several alternatives on where to return.</p>
+
+<h3>Version 1 - Return immediately</h3>
+<p>This is a straightforward example of returning the value as soon as it's known.</p>
+<pre class="fragment">
+public static double max(double a, double b) {
+    if (a &gt; b) {
+        <span class="hilite">return</span> a;
+    } else {
+        <span class="hilite">return</span> b;
+    }
+}</pre>
+
+<h3>Version 2 - Single return</h3>
+<p>The orthodox philosophy of <i>Structured Programming</i> is that every method
+   should have only one return at the end.  To implement this, 
+   use a variable to hold the max value and return it at the end.</p>
+<pre class="fragment">
+public static double max(double a, double b) {
+    double result;    // Stores the maximum value until the return.
+    if (a &gt; b) {
+        result = a;
+    } else {
+        result = b;
+    }
+    <span class="hilite">return</span> result;
+}</pre>
+
+<p>This method is clear in either style, but the rigid application of the one-return rule can 
+   make some methods very convoluted.  
+   The overriding principle  that most programmers use is that
+   <i>program flow should be as clear as possible</i>.
+   </p>
+   
+   
+<h3>Version 3 - No need for else when the true part returns.</h3>
+<pre class="fragment">
+public static double max(double a, double b) {
+    if (a &gt; b) {
+        <span class="hilite">return</span> a;
+    }
+    <span class="hilite">return</span> b;   // Only executed if comparison was false.
+}</pre>
+
+   
+   
+<h3>Version 4 - Typical hacker obfuscation</h3>
+<p>The hard-to-read <code>?:</code> operator is a favorite
+of programmers who want to impress others.  It does result in 
+shorter source code (but not more efficient execution). 
+Most people don't find this more readable.
+</p>
+<pre class="fragment">
+public static double max(double a, double b) {
+    <span class="hilite">return</span> a&gt;b?a:b;
+}</pre>
+<p>It could be made more readable with ()s and spacing.</p>
+<pre class="example">
+    <span class="hilite">return</span> (a &gt; b) ? a : b;</pre>
+
+
+<p><b>Library.</b> Of course you should use the predefined methods (<code>Math.max()</code>) rather than writing your own!
+</p>
+
+
+
+<h2>Uncaught exceptions moot the issue</h2>
+<p><b>The third way to exit a method.</b>  
+   The <code>return</code> statement and the end of the 
+   method are not the only ways to return from a method.
+   <i>Uncaught exceptions</i> are the other way to exit a method.
+   </p>
+   <ul>
+   <li>A <code>throw</code> statement exits the method.</li>
+   <li>Calling any method which throws exceptions many be a point at which the 
+       method is exited.  If it throws unchecked exceptions, it may not be
+       easy to determine that they are thrown.</li>
+   <li>Any statement which could cause an exception is another potential exit point.</li>
+   </ul>
+   
+   
+<h2>Editor support for showing method exit points</h2>
+<p>Some editors may highlight method exit points.
+   This is perhaps a better solution than trying to
+   bend the code to fit a particular rule.
+   </p>
+
+
+<h2>Additional Discussion</h2>
+<ul>
+<li><a href="http://www.javapractices.com/Topic114.cjp">Multiple return statements</a> (http://www.javapractices.com/Topic114.cjp)
+    Argues that multiple returns, altho subject to abuse, can make code clearer,
+    especially in handling exception cases at the beginning.</li>
+    
+<li><a href="http://onthethought.blogspot.com/2004/12/multiple-return-statements.html">Multiple Return Statements</a>
+    (http://onthethought.blogspot.com/2004/12/multiple-return-statements.html) 
+    Bruce Eckel argues that multiple return statements can make "cleaner" code.
+    If multiple returns are being used in a bad way, enforcing a rule like 
+    this probably won't make the programmer write clear code in any case.</li>
+    
+<li><a href="http://jroller.com/page/fra3k?entry=code_improvement_guidelines">Code improvement guidelines</a>
+    (http://jroller.com/comments/fra3k/Weblog/code_improvement_guidelines) 
+    Argues for single return statements on the basis of clarity, which is curiously
+    the same basis that is used for multiple return statements.
+    Nice argument for multiple return statements in a response to this blog
+    entry (in <code>equals()</code>).
+    </li>
+
+</ul>
+
+<div class="footer">2006</div>
+
+</div>
+</body>
+</html>
+

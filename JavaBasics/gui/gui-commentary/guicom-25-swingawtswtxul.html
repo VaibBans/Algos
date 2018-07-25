@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Swing vs AWT vs SWT vs ...</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Swing vs AWT vs SWT vs ...</h1>
+<p><b>Native components</b>?
+One question that constantly comes up is whether GUI 
+components should be implemented by using the local operating system components.
+If so, on Windows the Java buttons would be mapped into native Windows buttons, on 
+the Macintosh the native Macintosh buttons, etc.
+This is what the original Java GUI system, AWT, did, and how IBM's SWT
+has more recently chosen to implement a GUI.
+</p>
+<p><b>Synthesize all components</b>?
+The alternative is to define components in a portable way so that
+the same code is used on all systems.  This is how the Java's second implementation
+implementation, Swing, works.
+</p>
+
+<p>{TODO: Add a link to one of the 
+better summaries of the issues in this debate.]
+</p>
+
+<p><b>Swing is the most popular choice</b>. 
+This tutorial uses the Java Swing portable implementation
+of components. It supports the Java Look and Feel interface which allows
+the interface to be rendered very close to a native look, although not pixel-perfect.
+This is the mainstream choice.
+</p>
+
+<p>Swing did not replace everything in AWT, therefore you will use a mixture of 
+the two. However, never mix  the components from Swing and AWT. 
+The Swing component names generally start with 'J' (eg  <code>JButton</code>), 
+and the AWT components don't (eg <code>Button</code>). 
+Although mixing the two types will not produce a compile-time error, the result 
+may not display correctly.
+The Graphics, Color, Font, layout, listener, ... classes are from AWT, so you typically need to 
+have imports from AWT.
+</p>
+
+<p><b>AWT</b>. Java's first attempt at a GUI interface 
+was called the Abstract Windowing Toolkit (AWT).
+which was based on the underlying native system components.  For a number of reasons
+this was largely replaced by the Swing version, although the older AWT classes
+are still supported.  Some AWT classes, not including components, are still commonly used, 
+which is why you typically have to 
+import from both <code>java.awt</code> and <code>javax.swing</code>.
+You will find programs that still use AWT, but they are either very old,
+or they are written to be the absolutely most portable, running on even the oldest systems.
+The Micro Edition of Java (for PDAs, phones, ...) is based on AWT.
+</p>
+
+<p><b>SWT</b>.  Early versions of Swing had performance problems, which now 
+seem to be largely solved.  To get around performance and appearance problems, 
+IBM decided to build a set of GUI
+classes which were based on native components, called SWT.
+Portability is not too big a problem since SWT versions have been
+written for the major operating systems.
+Some programmers prefer this to Swing,
+but the improvements in Swing have nullified most advantages, 
+and SWT has its own set of problems.  After you learn Swing, you can try out
+SWT, but it's important to learn Swing first.
+</p>
+
+<p><b>XUL / XML</b>.  AWT, Swing, and SWT are very similar approaches.
+A radically different way of thinking about user interfaces is to represent
+them in XML.  The XUL group has championed this approach, and Microsoft has
+instantiated this as XAML.  There is a steady stream of new libraries
+using this way of designing interfaces.  
+Last year I used a couple of them, including SwixML, one of the more mature implementations, but you
+have to be willing to work a little harder.  
+The documentation is generally weak or non-existent.
+They may not be ready for prime time quite yet, but they are very promising.
+</p>
+
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

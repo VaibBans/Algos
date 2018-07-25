@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: GUI: Lesson 2 - Tiny Window - Your first window</title>
+</head>
+<body>
+<div id="content">
+<div class="nav"><a href="../index.html">Contents</a> - Prev: <a href="gui-10-intro.html">GUI 1 - Introduction</a> - Next: <a href="gui-21-tinywin-2classes.html">GUI 3 - Tiny Window with subclass</a></div>
+
+<h1>GUI 2 - Tiny Window - Your first window</h1>
+
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Show how a window can be built using JFrame.</li>
+</ul>
+<b>New Java classes, constructors, and methods</b>
+<ul>
+<li><code>JFrame</code> class
+    <pre>
+    JFrame()            // Constructor
+    setDefaultCloseOperation(...) // Make close box stop execution.
+    setVisible(true)    // Show window and monitor user interaction.</pre>
+    </li>
+</ul>
+</div>
+
+<p>Let's start by learning how to build the simplest possible window.
+</p>
+
+<table border="0">
+<tr>
+<td>
+<p><img src="tinyWindow.gif"  alt=""/></p>
+</td>
+<td>
+<p>The following is a very small program that
+creates a window.  It doesn't do anything, and it's so small you might have a hard
+time finding it in the upper left corner
+of your screen.
+</p>
+</td>
+</tr></table>
+
+<table border="0">
+<tr valign="top">
+<td>
+<p><b>Try resizing it.</b>  A default JFrame can do a few things -- it understands
+minimize and maximize, it can be dragged from the title bar, and it
+can be resized.  If you resize it, you'll notice that the content
+pane is completely empty -- we haven't added any components to it yet.
+</p>
+<p><b>Close box</b>.  One thing that the default JFrame doesn't handle well is the close box.
+The default close box simply makes the window invisible, but doesn't 
+stop the program!
+You must explicitly make the close box do something.
+A good choice for simple programs is to terminate the program when the close box
+is clicked, which is done below.
+</p>
+</td>
+<td>
+<p><img src="tinyWindowStretched.gif"  alt=""/></p>
+</td>
+</tr></table>
+
+
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File   : gui-tutorial/tw/TinyWindow.java
+// Purpose: Create a very small window!  
+//          This is about the smallest possible GUI program.
+//          It does nothing, but close box and window resizing work.
+// Author : Fred Swartz - 2006-11-09
+
+import javax.swing.*;                                           //Note 1
+
+class TinyWindow {
+    public static void main(String[] args) {
+        JFrame window = new JFrame();                           //Note 2
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //Note 3
+        window.setVisible(true);                                //Note 4
+    }                                                           //Note 5
+}
+</pre></div>
+</td></tr></table>
+
+<h3>Notes</h3>
+<ol>
+<li>This import statement gets all classes in the javax.swing package, although we use only the JFrame class here. There are usually a couple of imports of other common packages.</li>
+<li>"Windows" are implemented by the JFrame class.</li>
+<li>Make the application quit when the close box is clicked.</li>
+<li>After the window has been constructed in memory, display it on the screen. The setVisible call also starts a separate thread to monitor user interaction with the interface.</li>
+<li>When we are finished setting up and displaying the window, don't call System.exit(0). We don't want to stop the program. Although main returns, execution continues because the call to setVisible(true) created another execution thread, A GUI program builds the user interface, then just "goes to sleep" until the user does something.</li>
+</ol>
+
+
+
+<div class="footer">
+Copyright 2006 <a href="http://www.fredosaurus.com/fred/index.html">Fred Swartz</a>
+Permission to copy for non-profit educational purposes.  All code is in public domain.
+</div>
+
+</div>
+</body>
+</html>
+

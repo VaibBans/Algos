@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: GUI Lesson 7 - DogYears - Listeners</title>
+</head>
+<body>
+
+<div id="content">
+<div class="nav"><a href="../index.html">Contents</a> - Prev: <a href="gui-30-dogyears-gui.html">GUI 5 - Dog Years - GUI only</a> - Next: <a href="gui-80-wrapup.html">GUI 7 - Overall Organization</a></div>
+
+<h1>GUI 6 - DogYears - Listeners</h1>
+
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Create an inner class listener for the button.</li>
+<li>Attach the listener to the button.</li>
+<li>Get and set the contents of a text field.</li>
+</ul>
+<b>New Java classes, interfaces, and methods</b>
+<ul>
+<li><code>JTextField</code>
+    <pre>
+    getText()           // Get the text from the field as a String.
+    setText(<i>text</i>)       // Set the text in the field.</pre>
+    </li>
+<li><code>JButton</code>
+    <pre>
+    addActionListener(<i>listener</i>)    // Add a listener to a button.</pre>
+    </li>
+<li><code>ActionListener</code> interface for object used as a listener.
+    <pre>
+    actionPerformed(ActionEvent e) // Called when, eg, a button is clicked.</pre>
+    </li>
+</ul>
+</div>
+
+
+<h2>This program is a model for many programming problems</h2>
+<p>
+A lot of problems, especially beginning programming assignments,
+fit into this form: one or more input fields, a button that performs
+the computation, and output fields that display the result.
+You should be able to take this program and modify it to 
+solve other similar problems without too much work.
+</p>
+
+
+<h2>Java Practice: Listeners</h2>
+<p>All GUI systems, not just Java, call a method when the 
+user does something that demands the program's attention, eg
+clicking a button.  The details of the connection between the GUI
+component and the called method method vary from language to language.  
+Java uses a pure object-oriented approach to implementing what they
+call <i>listeners</i>.
+</p>
+<p>
+There are several kinds of listeners in Java, depending on what
+the user does, but the most common is called 
+an <i>action listener</i>, which is used with buttons, menu items, etc.
+An action listener is added to the button in the example below with
+the following statement.
+</p>
+<pre class="fragment">
+convertBtn.addActionListener(new ConvertBtnListener());</pre>
+
+<p><b>Terminology note</b>.  
+The word "interface" is used in several different ways in Java.
+</p>
+<ol>
+<li>A <i>user</i> interface such as a GUI or console interface.</li>
+<li>An Application Programming Interface (API) are the classes and methods defined for use by others.</li>
+<li>The Java programming unit called <code>interface</code> that is a list of methods that
+must be defined by any class that <code>implements</code> it.</li>
+</ol>
+
+<p><b class="leadin"><code>ActionListener</code> programming interface</b>.  
+An action listener is an
+object that implements the <code>ActionListener</code> programming interface.
+The <code>ActionListener</code> interface requires that one method, <code>actionPerformed</code>, be defined.
+Listener classes are usually defined as inner classes (classes inside other classes).
+In the DogYears example below you can see that objects of the inner class 
+<code>ConvertBtnListener</code> can be used as action listeners
+because the class implements <code>ActionListener</code>.
+</p>
+<pre class="fragment">
+class ConvertBtnListener <span class="hiliteu">implements ActionListener</span></pre>
+
+<p>If a class says that it implements an interface, then the definition
+of the class must contain the required method definitions, and
+you can see that <code>actionPerformed</code> is indeed defined.
+</p>
+
+<p><b class="leadin">What happens if you don't define the methods</b>.
+If a class declares that it implements an interface, but doesn't define the
+required methods, you'll get an error message.  The message has improved
+in recent versions of Java, but if it says something about 
+<i>abstract</i> classes you can be sure you either forgot to define the method,
+misspelled the method name, have the wrong return
+type or number or type of parameters.  The method must be defined 
+exactly as required by the interface.  Don't try to get rid of the error message
+by making your class abstract (a less common design option).
+</p>
+
+<p><b class="leadin">Why use an inner class?</b>  
+You want to tell Java that it should call a particular
+method when the button is clicked, but there is no natural way to 
+pass a method as a parameter in Java.  The solution is to
+pass an <i>object</i> that defines the <code>actionPerformed</code> method. 
+To make an object that has this method, you must first define a class (methods
+can only be defined in classes).  
+</p>
+<p>The <code>actionPerformed</code> method in this class must be 
+able to get and set the values in the text fields or other input and 
+output areas of the GUI.  A simple, common solution is to define 
+this listener class <i>inside</i> the <code>JFrame</code> subclass.
+Any method inside an inner class can refer to instance
+variables in the outer class.  The example below illustrates this.
+</p>
+
+
+<h2>Source code: DogYears GUI and logic</h2>
+<p>
+<img src="dogyears1.gif" alt="DogYears user interface"/>
+</p>
+
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+ 23 
+ 24 
+ 25 
+ 26 
+ 27 
+ 28 
+ 29 
+ 30 
+ 31 
+ 32 
+ 33 
+ 34 
+ 35 
+ 36 
+ 37 
+ 38 
+ 39 
+ 40 
+ 41 
+ 42 
+ 43 
+ 44 
+ 45 
+ 46 
+ 47 
+ 48 
+ 49 
+ 50 
+ 51 
+ 52 
+ 53 
+ 54 
+ 55 
+ 56 
+ 57 
+ 58 
+ 59 
+ 60 
+ 61 
+ 62 
+ 63 
+ 64 
+ 65 
+ 66 
+ 67 
+ 68 
+ 69 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File   : gui-tutorial/DogYears2.java
+// Purpose: Use textfields and button to convert dog to human years.
+//          A button listener has been added in this version.
+//          No error checking on input values.
+// Author : Fred Swartz, 2006-11-09,  Placed in public domain.
+
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;  // Needed for ActionListener
+
+//////////////////////////////////////////////////////// class DogYears2
+class DogYears2 extends JFrame {
+    //======================================================== constants
+    private static final int DOG_YEARS_PER_HUMAN_YEAR = 7;      //Note 1
+
+    //=============================================== instance variables
+    private JTextField _humanYearsTF = new JTextField(3);       //Note 2
+    private JTextField _dogYearsTF   = new JTextField(3);
+
+    //====================================================== constructor
+    public DogYears2() {                                        //Note 3
+        // 1... Create/initialize components
+        JButton convertBtn = new JButton("Convert");  //Note 4
+        <span class="hiliteu">convertBtn.addActionListener(new ConvertBtnListener());</span> //Note 5
+
+        _dogYearsTF.addActionListener(new ConvertBtnListener());
+        _humanYearsTF.setEditable(false);
+
+
+        // 2... Create content panel, set layout
+        JPanel content = new JPanel();
+        content.setLayout(new FlowLayout());
+
+        // 3... Add the components to the content panel.
+        content.add(new JLabel("Dog Years"));
+        content.add(_dogYearsTF);              // Add input field
+        content.add(convertBtn);               // Add button
+        content.add(new JLabel("Human Years"));
+        content.add(_humanYearsTF);            // Add output field
+
+        // 4... Set this window's attributes, and pack it.
+        setContentPane(content);
+        pack();                               // Layout components.
+        setTitle("Dog Year Converter");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);          // Center window.
+    }
+
+    ////////////////////////////////////////////////// ConvertBtnListener
+    <span class="hiliteu">class ConvertBtnListener implements ActionListener</span> {         //Note 6
+        public void actionPerformed(ActionEvent e) {
+            //... Get the value from the dog years textfield.
+            String dyStr = _dogYearsTF.getText();                //Note 7
+            int dogYears = Integer.parseInt(dyStr);              //Note 8
+
+            //... Convert it - each dog year is worth 7 human years.
+            int humanYears = <span class="hiliteu">dogYears * DOG_YEARS_PER_HUMAN_YEAR</span>; //Note 9
+
+            //... Convert to string and set human yrs textfield
+            _humanYearsTF.setText("" + humanYears);              //Note 10
+        }
+    }
+
+    //====================================================== method main
+    public static void main(String[] args) {
+        DogYears2 window = new DogYears2();
+        window.setVisible(true);
+    }
+}
+</pre></div>
+</td></tr></table>
+
+<h3>Notes</h3>
+<ol>
+<li>Your program should not contain "magic numbers".  Instead, define constants with meaningful names.</li>
+<li>This declares and initializes a text field to be approximately 3 characters wide.</li>
+<li>The GUI constructor typically performs the following chores: (1) Finish initializing components (creating, setting attributes, adding listeners, ...).  (2) Create a content pane and set the layout.  (3) Add the components.  (4) Set frame attributes, including the content pane, and pack it to do the layout.</li>
+<li>This declares and initializes a "Convert" button.</li>
+<li>This creates an association between the button and an object.  When the button is clicked, it will call the actionPerformed method of that object.</li>
+<li>This is one of most common ways to create a listener - define an inner class that "implements ActionListener", and in that class define the actionPerformed() method.</li>
+<li>Get the text from a JTextField with a call to its getText() method.  This returns a string, which in this case must be converted to a number before it can be used in the computation.</li>
+<li>If this can't be converted, it will throw an exception.  You'll learn how to handle exceptions later.</li>
+<li>This is the essential "logic" or "model" of the problem.  It's so simple that I put it here in the listener.  It would be better in a separate class, or at least a separate method, Later examples with more logic will separate the logic/model...</li>
+<li>Set the value of a JTextField by calling its setText() method and passing a string to it.  Concatenating an empty string is a common idiom to convert a number to String.</li>
+</ol>
+
+
+<h2>Commentary</h2>
+<p>You can write this without subclassing JFrame.  Look at
+<a href="gui-commentary/guicom-dogyears-allinmain.html">Commentary - Build window in main()</a>
+to see this program rewritten in another style.
+</p>
+
+
+
+<h2>Programming problems</h2>
+<p>[TODO]</p>
+
+
+
+
+<div class="footer">
+Copyright 2006 <a href="http://www.fredosaurus.com/fred/index.html">Fred Swartz</a>
+Permission to copy for non-profit educational purposes.  All code is in public domain.
+</div>
+</div>
+</body>
+</html>
+

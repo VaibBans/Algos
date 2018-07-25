@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: GUI: Lesson 1 - Introduction</title>
+</head>
+<body>
+<div id="content">
+<div class="nav"><a href="../index.html">Contents</a> - Next: <a href="gui-20-tinywin.html">GUI 2 - Tiny Window</a></div>
+
+<h1>GUI 1 - Introduction</h1>
+
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Explain the scope of this tutorial.</li>
+<li>Point advanced user to the Commentary.</li>
+<li>Contrast read-compute-write with event-driven programming.</li>
+</ul>
+</div>
+
+<p><b>Summary</b>.  This is an introduction to writing
+<i>Graphical User Interfaces</i> (GUIs).
+You will be able to do many programming projects after reading this tutorial.
+The tutorial presents model programs of increasing capability.
+</p>
+
+<h2>Overview of GUI skills to learn</h2>
+<p><img src="gui_overview.png" alt="GUI Overview"></p>
+
+<p>These <b>first GUI lessons</b> cover only some of these topics: 
+the only layout that is covered is FlowLayout, and Graphics is ignored.
+</p>
+
+<p><b>Prerequisites</b>.  Your should have
+a basic understanding of expressions,
+<i>if</i> statements, classes, and methods.  
+If you're taking a programming course, this should fit 
+comfortably in the middle of learning Java.
+Basic graphical user interfaces don't depend on arrays, collections, or exceptions.
+</p>
+
+<h2>Many choices for how to proceed</h2>
+
+<p>
+<b>The price of flexibility</b>.  Java's flexibility provides an experienced 
+programmer with many alternative GUI styles.
+However, choices are a problem for the beginner because only
+a few are good, and many lead to unhappiness.
+</p>
+
+<p><b>Dog house requires little skill</b>.  When you're building something small, almost any approach works. 
+For example, to build a dog house, you don't need clear
+plans, can easily correct mistakes, etc.
+Building a house requires more skills and the use of good techniques.  
+A good dog-house builder isn't necessarily going to be good at building houses,
+much less office buildings.
+</p>
+
+<p><b>Goal is more than a dog house.</b>  This tutorial keeps simple things simple, 
+but teaches techniques which scale up to house size.
+You'll be able to build substantial programs using these skills.
+The Java equivalent of commercial buildings requires techniques
+which are beyond the scope of this tutorial.
+</p>
+
+<p>This first section will teach you all basic elements of GUI programming.
+The second section (not yet written) will expand on all aspects so that
+you'll be able to build fairly large GUI programs.
+</p>
+
+
+
+<h2>Commentary</h2>
+<p>When you build your first GUI programs, imitate the examples.
+Eventually you will want to know why certain
+choices were made and about alternatives.  Or perhaps you've seen
+different ways presented in text books and wonder
+if they are better, worse, or just different.  
+Or you already know how to build GUI interfaces,
+but question the choices here.
+To answer these questions <i>after</i> you understand 
+how to build GUIs, read the <i>GUI Commentary</i> pages listed in the table of contents.
+</p>
+
+
+   
+<h2>Read-compute-write versus event-driven programming</h2>
+
+<p><b>Read-compute-write</b>.
+Most programmers start with a common idea for programming:
+read input data, process the input data, write the output data.
+This is often be done in a loop to process more than one 
+set of input data.  The essential mindset is that
+the programmer is in control at all times.
+This is a very useful paradigm, but GUI programming requires
+you to change your thinking, 
+and to give up this feeling of total control.
+It may feel uncomfortable at the beginning, but you'll get used to it.
+</p>
+
+<p><b>Giving up control - Event-driven programming</b>.  
+The GUI programming style is referred to as 
+<i>event-driven programming</i>.  In this style of programming
+you set up the graphical user interface and initialize things.
+It appears that the program just stops and sits there doing nothing!
+There is no input loop; your program isn't trying to read from the user.
+You, the programmer, have to learn to give up control in two ways.
+Your program gives control to the GUI system, and you only get control
+back to when your listeners are called.
+</p>
+<p>At an even higher level, your program has given control to the user.
+It's the user who selects which of your methods to call by their choice 
+of buttons to click on, menu items to select, etc.
+</p>
+<p><b>Listeners</b>.
+When the user clicks a button 
+(or uses another GUI component), an <i>event</i> is sent to <i>listener</i> method.
+Your job as a programmer is to write a <i>listener</i> method for each
+component.  
+It's the user, not the programmer, who has control, indirectly choosing methods in your program to execute
+by interacting with graphical user interface components.
+</p>
+
+
+<div class="footer">
+Copyright 2007 <a href="http://www.fredosaurus.com/fred/index.html">Fred Swartz</a>
+Permission to copy for non-profit educational purposes.  All code is in public domain.
+</div>
+</div>
+
+</body>
+</html>
+

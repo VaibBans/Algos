@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: Lesson 10.2 - Parameters and arguments</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav --><div class="nav"><a href="../index.html">Contents</a> - Prev: <a href="methods-10-intro.html">1 - Introduction to methods</a> - Next: <a href="methods-20-define.html">3 - Defining a static method</a></div>
+
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Methods 2 - Actual arguments (parameters)</h1>
+
+
+<!-- index parameter, actual -->
+<!-- index argument, actual -->
+
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Left-to-right argument evaluation</li>
+<li>Term: actual argument = value which is passed in a method call.</li>
+<li>Term: void method = method that doesn't return a value.</li>
+<li>Term: value-returning method = method that does return a value.</li>
+</ul>
+</div>
+
+<h2>Terms: <i>actual argument</i>, <i>argument</i>, <i>actual parameter</i>, <i>parameter</i></h2>
+<p>The values that are passed to a method are called <i>actual arguments</i> in
+the Java specification.  
+However, it is very common for them to be called just <i>arguments</i>, 
+<i>actual parameters</i>, or just plain <i>parameters</i>.
+These terms are so used interchangeably so often that even the Java specification isn't entirely consistent.
+For a value which is passed in a call I'll try to stick to <i>actual argument</i> or just <i>argument</i>,
+which are generally regarded as the "best" terms.
+</p>
+
+<h2>Identifying method arguments</h2>
+<p>When you call a method, you can pass information for it to use.  
+These <i>actual arguments</i> are inside
+parentheses following the method name.  Use commas to separate 
+arguments if there is more than one.  The previous program is
+shown below, but this time the arguments in the calls are highlighted.
+</p>
+
+<table border='0' summary=''><tr><td valign='top'><pre class='example2'>
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+  7 
+  8 
+  9 
+ 10 
+ 11 
+ 12 
+ 13 
+ 14 
+ 15 
+ 16 
+ 17 
+ 18 
+ 19 
+ 20 
+ 21 
+ 22 
+ 23 
+ 24 
+ 25 
+ 26 
+ 27 
+ 28 
+ 29 
+ 30 
+</pre></td><td valign='top'>
+<div class="file"><pre>
+// File   : methods/KmToMilesArgs.java
+// Purpose: Convert kilometers to miles. Use JOptionPane for input / output.
+// Author : Fred Swartz
+// Date   : 22 Apr 2006
+
+import javax.swing.*;
+
+public class KmToMilesArgs {
+    //============================================================ constants
+    private static final double MILES_PER_KILOMETER = 0.621;    
+
+    //================================================================= main
+    public static void main(String[] args) {
+        //... Local variables
+        String kmStr;    // String km before conversion to double.
+        double km;       // Number of kilometers.
+        double mi;       // Number of miles.
+
+        //... Input
+        kmStr = JOptionPane.showInputDialog(<span class="hiliteu">null</span>, <span class="hiliteu">"Enter kilometers."</span>);
+        km = Double.parseDouble(<span class="hiliteu">kmStr</span>);
+
+        //... Computation
+        mi = km * MILES_PER_KILOMETER;
+
+        //... Output
+        JOptionPane.showMessageDialog(<span class="hiliteu">null</span>, <span class="hiliteu">km + " kilometers is "</span>
+                                          <span class="hiliteu">+ mi + " miles."</span>);
+    }
+}
+</pre></div>
+</td></tr></table>
+
+
+
+<h2>Argument evaluation</h2>
+<p>Before a method is called, the arguments are evaluated left-to-right.
+In the example above most arguments are simple values, except the
+second argument in the call to <code>showMessageDialog</code>.
+Before the call can be made, this argument expression must be evaluated 
+by performing the conversions to string and the concatenations.
+</p>
+
+
+<h2>Void and value-returning methods</h2>
+<p>A method may return a value.  In the example above, 
+<code>showInputDialog</code> returns a String
+and <code>parseDouble</code> returns a double value.
+These method calls can be used anywhere in an expression
+where a String or double value is required.  Here they simply
+provide the value for the right side of an assignment.
+</p>
+
+<p><span class="leadin"><code>void</code></span>.
+If a method has a "side effect", but doesn't produce a value,
+it is called a <i>void</i> method.  
+The <code>showMessageDialog</code> method shows something to the
+user, but doesn't return a value, and is a void method.
+</p>
+<p>
+When a method is defined, you need to specify the keyword <code>void</code>
+if it doesn't return a value.  You can see this on line 13 where the 
+<code>main</code> method definition starts.
+</p>
+
+
+
+
+<h2>Review Questions</h2>
+<p>[TODO]</p>
+
+<div class="footer">2006</div>
+
+</div>
+</body>
+</html>
+

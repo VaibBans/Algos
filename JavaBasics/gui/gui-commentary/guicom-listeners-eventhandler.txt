@@ -1,0 +1,28 @@
+Cay, I am sorry but I still don't buy this closure frenzy. Personally even though I would preffer to use Action as quoted on previous post, to call an event handler I simply use the java.beans.EventHandler (existing since 1.4 !!!). This means the code would look like
+
+public class Foo extends JFrame{
+ int counter = 0;
+ public Foo(){
+    JButton button = new JButton("Click me!");
+    this.add(button);
+    button.addActionListener(EventHandler.create(ActionListener.class, this, "doStuff"));
+ }
+
+ public static void main(String[] args) {
+  Foo foo = new Foo();
+  foo.pack();
+  foo.setVisible(true);
+ }
+
+ public doStuff(){
+  // get the data from the context and do what it is suppose to do
+ }
+Posted by: bjb on April 17, 2007 at 11:33 PM
+
+------
+
+Concerning Swing events, I agree that Actions are probably better than spaghetti closures. 
+But I also agree with others that there are plenty more use cases for closures than that. 
+(Like almost nonstop use cases in everyday code.) I also strongly dislike the use of 
+reflection such as used by EventHandler. Static usage analysis is nice, and this makes a mess of that.
+Posted by: tompalmer on April 18, 2007 at 09:19 AM

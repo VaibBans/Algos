@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../basics.css"/>
+
+  <title>Java Basics: Methods 7 - How call works</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav --><div class="nav"><a href="../index.html">Contents</a> - Prev: <a href="methods-45-overloading.html">6 - Overloading</a> - Next: none</div>
+
+<!-- index "stack" -->
+<!-- index "push (stack operation)" -->
+<!-- index "pop (stack operation)" -->
+<!-- index "stack frame" -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Methods 7 - How call works</h1>
+
+
+<div class="purpose">
+<b>Purpose of this lesson</b>:
+<ul>
+<li>Examine the method call/return process in more detail.</li>
+<li>Term: <i>call stack</i> = Memory that is used to save return address and local variables.</li>
+<li>Term: <i>stack frame</i> = The storage on the call stack that is used by one method.</li>
+</ul>
+<b>New Java language features</b>
+<ul>
+<li>None.
+    </li>
+</ul>
+</div>
+
+<p>The table below shows how the call stack changes as calls and returns in 
+the KmToMilesMethods  program are made.
+This shows the first 8 changes to the call stack after <i>main</i> is entered.
+</p>
+
+<h2>Dynamic changes in the call stack memory allocation</h2>
+
+<p>The table below shows how the call stack changes as calls and returns in 
+the KmToMilesMethods  program are made.
+This shows the first 8 changes to the call stack after <i>main</i> is entered.
+</p>
+<p>There is actually something
+before <i>main</i> on the call stack, and the library methods that are called
+call many methods of their own, which isn't shown here because we don't
+need to know what they call.
+</p>
+<p><b>Stack frame</b>.  Each box represents the information that's stored on 
+the call stack for each method.  This block of information is often 
+called a <i>stack frame</i>.  There is internal information associated with the
+method, for example, it saves the place to resume execution in the calling method.
+Each stack frame is labelled with the method name and a list of parameters and
+local variables that are allocated on the stack.  "???" is written when we don't
+know (or  care) what the local variables are that are used by a library method.
+</p>
+<table border="0" cellspacing="4">
+<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th> </tr> <tr valign="top">
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+</table></td>
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+<tr><td><b><i>getDouble</i></b><br/>prompt<br/>str</td></tr>
+</table></td>
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+<tr><td><b><i>getDouble</i></b><br/>prompt<br/>str</td></tr>
+<tr><td><b><i>showInputDialog</i></b><br/>???</td></tr>
+</table></td>
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+<tr><td><b><i>getDouble</i></b><br/>prompt<br/>str</td></tr>
+</table></td>
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+<tr><td><b><i>getDouble</i></b><br/>prompt<br/>str</td></tr>
+<tr><td><b><i>parseDouble</i></b><br/>???</td></tr>
+</table></td>
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+<tr><td><b><i>getDouble</i></b><br/>prompt<br/>str</td></tr>
+</table></td>
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+</table></td>
+
+<td><table border="1" cellspacing="0">
+<tr><td><b><i>main</i></b><br/>args<br/>kms<br/>miles</td></tr>
+<tr><td><b><i>convertKmToMi</i></b><br/>kilometers<br/>miles</td></tr>
+</table></td>
+
+</tr></table>
+
+
+
+<h2>Typical call sequence</h2>
+
+<ol>
+<li><b>Evaluate arguments left-to-right</b>.
+    If an argument is a simple variable or a literal value, there is no 
+    need to evaluate it.  When an expression is used, the expression must be evaluated before
+    the call can be made.
+    </li>
+
+<li><b>Push a new <i>stack frame</i> on the call stack</b>.
+    When a method is called, memory is required to store the following information.
+    <ul>
+    <li><b>Parameter and local variable storage</b>.  The storage that is needed for
+        each of the parameters and local variables is reserved in the stack frame.
+        </li>
+    <li>Where to continue execution when the called method returns.  You don't have to worry about
+        this; it's automatically saved for you.
+        </li>
+    <li>Other working storage needed by the method may be required.  You don't have
+       to do anything about this because it's handled automatically.
+       </li>
+    </ul>
+    </li>
+
+<li><b>Initialize the parameters</b>.
+   When the arguments are evaluated, they are assigned to the 
+   local parameters in the called method.
+   </li>
+
+<li><b>Execute the method</b>.
+   After the stack frame for this method has been initialized, 
+   execution starts with the first statement and continues as normal.
+   Execution may call on other methods, which will push and pop 
+   their own stack frames on the call stack.
+   </li>
+
+<li><b>Return from the method</b>.
+   When a <i>return</i> statement is encountered, or the end of a void method
+   is reached, the method returns.
+   For non-void methods, the return value is passed back to the calling method.
+   The stack frame storage for the called method is popped off the call stack.
+   Popping something off the stack is really efficient - a pointer is simply
+   moved to previous stack frame.
+   This means that the current stack frame can be reused by other methods.
+   Execution is continued in the called method immediately after where
+   the call took place.
+   </li>
+</ol>
+
+
+<h2>Review Questions</h2>
+<p>The table above shows only the first part of the execution.  Show how the
+call stack would change during the remainder of the execution of the program.</p>
+
+<div class="footer">2006</div>
+
+</div>
+</body>
+</html>
+

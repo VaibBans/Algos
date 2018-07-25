@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Where to create components</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics</h1>
+
+<h1>Where to create components</h1>
+
+<p><b>Component creation: declaration or constructor</b>: 
+Where should components be created 
+with <code>new</code>, as part of the declaration, or in the constructor?
+This is a pretty small problem and I don't see much reason to prefer one
+style to the other, altho I've chosen to generally create them in the declarations.
+</p>
+
+<h3>Creating components in the declaration</h3>
+<p>Here's an example of declaring and creating a component in the declaration.
+It's a common style that is nice and brief.
+</p>
+<pre class="fragment">
+    . . .
+    private JTextField myHumanYearsTF = new JTextField(3);
+
+    //====================================================== constructor
+    public DogYearsGUI_1() {
+        //... Create/initialize components
+        myHumanYearsTF.setEditable(false) ;
+        . . .</pre>
+<p>Issues with this:</p>
+<ol>
+<li>Some components will be created in the instance variable
+    declaration area, but components that are stored in local
+    variables will be created
+    in the constructor.  A slight
+    inconsistency, which may be irrelevant.
+    If they are all initialized in the constuctor, then 
+    there's only one place to look for initializations.
+    </li>
+<li>Even if a component is created in the declaration,
+    it is not uncommon to set additional attributes,
+    which must be done in the constructor.
+    This splits the code for the component into two
+    places.
+    </li>
+<li>The instance variables are typically the "most interesting"
+    because they are used in multiple places.  If they are all
+    initialized at their point of declaration, it's easy to 
+    find all of these variables and their initial values.
+    </li>
+</ol>
+    
+    
+<h3>Creating components in the constructor</h3>
+<pre class="fragment">
+    . . .
+    private JTextField myHumanYearsTF;
+
+    //====================================================== constructor
+    public DogYearsGUI_1() {
+        //... Create/initialize components
+        myHumanYearsTF = new JTextField(3);
+        myHumanYearsTF.setEditable(false) ;
+        . . .</pre>
+
+        
+        
+<h2>Not like C++</h2>
+<p>In C++ uninitialized instance variables usually have whatever value 
+   happens to already be in that part of memory,
+   which can lead to extremely difficult
+   to find bugs.  Hence, in C++ it is recommended to always 
+   initialize instance variables at the point of declaration.
+   This isn't as important in Java because instance
+   variables are automatically initialized to null if not otherwise
+   initialized.  And during execution null pointer checking is performed,
+   so this error is usually quickly found in the testing phase.
+   </p>
+<p>Therefore, the style of initializing in the declaration doesn't
+have the importance it did in C++.
+</p>
+
+
+<div class="footer">2005</div>
+
+</div>
+</body>
+</html>
+

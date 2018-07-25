@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Fred Swartz (www.fredswartz.com)"/>
+  <meta name="level" content="1"/>
+  <link rel="stylesheet" type="text/css" href="../../basics.css"/>
+
+  <title>Java Basics: Listener alternatives</title>
+</head>
+<body>
+
+<div id="content">
+<!-- nav -->
+
+<h1 class="title">Java Basics - Commentary</h1>
+
+<h1>Listener alternatives</h1>
+
+<p><b>Q: What's the best way to handle action (or other) events?</b> 
+    Java is plagued by an abundance of ways to handle listener events: 
+    anonymous inner classes (several variations),
+    named inner-classes, 
+    subclassing AbstractAction, 
+    implementing Action,
+    EventHandler,
+    ActionMaps and ActionMapUIResource, 
+    reflection, 
+    event busses, 
+    single listener method for all events, 
+    alternate frameworks, ... .
+    You will, unfortunately, see all of these used at one time or another.  
+    </p>
+    
+<p><b>A: There is no clear good way, but there are bad ways.</b>  
+    That there is no simple <i>best</i> way to implement listeners is a failure 
+    of language design / libraries / leadership.
+    Sun Microsystems is (as of this writing) at at last proposing some guidance
+    on this matters in the upcoming JSR 296 - <i>Swing Application Framework</i>.
+    It hasn't been made public yet, but it looks like Actions may be one of the
+    first choices.
+    I'll mention pros and cons of various approaches, and
+    where some are more appropriate than others.
+    </p>
+    
+<p><b>Recommendations.</b>
+    For small programs, I've recommend the following, in this order.
+    When JSR 296 becomes available, it's likely that subclassing AbstractAction 
+    will become the top choice.</p>
+    <ul>
+    <li><i>Named inner classes</i> - Provides good separation of GUI details from listeners.  My first choice in examples.</li>
+    <li><i>Anonymous inner class</i> - OK for small program, but quickly becomes unmaintainable as program size grows.</li>
+    <li><i>AbstractAction subclass</i> - Similar to the <i>named inner class</i> approach.
+        It's a little more work for small programs, but less work for larger programs.</li>
+    </ul>
+    
+<p>Buttons, menu items, and other components call an <i>action listener</i> method
+    when clicked (or whatever).  This calls the <code>actionPerformed</code> 
+    method in the object that implements the <code>ActionListener</code> 
+    interface.  There are several ways to do this, and some of them are bad.
+    </p>
+    
+<h2>Named inner class listeners - Good for small programs</h2>
+    <dl>
+    <dt>Example</dt>
+        <dd>See <a href="../gui-31-dogyears-guimodel.html">GUI 6 - DogYears - Listeners</a>.
+        </dd>
+    <dt>Pros</dt>
+        <dd><ul>
+            <li>Easy to understand.</li>
+            <li>Easy to access the components in the outer class.</li>
+            <li>Very readable with a good name.</li>
+            <li>Gives nice structure by textually separation from the rest of the GUI construction.</li>
+            <li>Similarity to subclassing AbstractAction makes natural growth path to larger programs.</li>
+            </ul>
+            </dd>
+    <dt>Cons</dt>
+        <dd><ul>
+            <li>Bulky.  They take more screen space</li>
+            </ul>
+            </dd>
+    </dl>
+
+    
+<h2>Anonymous inner class listeners - Small programs only.</h2>
+    <p>Anonymous inner class listeners are commonly used.  In some cases they 
+    are a good technique, but they also can lead to messy code if you're not careful.  
+    They require somewhat obscure syntax, and require using <i>final</i> 
+    variables when defined in a method.
+    Look at <a href="guicom-dogyears-allinmain.html">Commentary - Build window in main()</a>
+    for an example.
+    </p>
+    <p>
+    NetBeans uses this style in automatically generated code, and makes it 
+    simple for the programmer by calling an automatically generated method
+    where the programmer can place code.
+    </p>
+    
+<h2>AbstractAction (good)</h2>
+<p>Creating an AbstractAction
+    listener object for each action is a nice way to handle events.
+    An AbstractAction provides the text, icon, enabled/disabled status that
+    will be used by the button or menu item.   This isn't usually taught
+    in introductory courses
+    because it really starts to show its value only when the program gets larger.
+
+    [TODO: needs example]
+    </p>
+    
+    
+
+<h2>Separate top-level listener classes</h2>
+    <p>
+    [TODO: show non-private fields or getter/setter methods]
+    </p>
+    
+
+<h2>One action listener for all buttons / menu items (bad)</h2>
+    <p>Sometimes you'll see one action listener defined in the GUI, 
+    eg, a JFrame subclass that implements ActionListener.
+    It then proceeds with cascading series of  else-ifs.
+    The "action command" defaults to the text on a button or menu item,
+    but can be set explicitly, which is necessary if the program is to
+    be internationalized.
+    </p>
+    <p>
+    In small example programs with only one component which generates action events
+    (true only for very small programs), there's no problem, 
+    but as soon as multiple components generate them,
+    you are forced to decode the events yourself,
+    which becomes increasingly complex as the numbers and types
+    of components in your GUI increase.
+    </p>
+    <pre class="file">
+private class GUIActionListener implements ActionListener {
+    public void actionPerformed(ActionEvent event) {
+        String actionCmd = event.getActionCommand();
+        if (actionCmd.equals("about")) {
+            showAbout();
+        } else if (actionCmd.equals("open")) {
+            openFile();
+        } else if (actionCmd.equals("new")) {
+            createNewInstance();
+        } else if (actionCmd.equals("quit")) {
+            shutdown();
+        . . .
+        }
+        return;
+    }
+}</pre>
+
+<p><b>Historical solution</b>.  This was the only option available in early Java, which
+    was where this all got started.
+    I believe it's the style for handling events in the Micro Edition also, 
+    but it's not the best for most programs.
+    </p>
+
+<p><b>Specific objections</b>.  
+    There are a couple of reasons for not using one single listener, but
+    let's imagine a case where there are a lot of components, for example,
+    MS Word. You can imagine the many hundreds of buttons, menu item, etc
+    that generate ActionEvents (assuming it was written in Java).
+    </p>
+    <ul>
+    <li>Doing sequential string comparisons is ugly, even if you don't worry
+        about the inefficiency.</li>
+    
+    <li>It's hard to modularize a large GUI if everything goes to one listener.</li>
+    </ul>
+
+<p>It's like having all method calls in a class enter at one
+dispatcher that tested a string and decided with method to call. 
+No one would stand for that kind of nonsense.
+It's trivial to have a separate listener for each action, and
+offensive to have everything come to one listener only to be
+divided into separate calls.
+</p>
+
+<p><b>Better</b> is to have a separate listener for each distinct action.</p>
+
+
+
+<div class="footer">2006</div>
+
+</div>
+</body>
+</html>
+
